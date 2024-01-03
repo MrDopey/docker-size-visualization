@@ -165,7 +165,7 @@ def doChildMatch(image1: LayerImage, image2: LayerImage) -> bool:
 
 def populate_graph(dot: graphviz.Digraph, layer_tree: List[LayerImage]):
     for layer in layer_tree:
-        dot.node(layer.name(), layer.graph_label())
+        dot.node(layer.name(), label=layer.graph_label(), tooltip=layer.created_by)
 
         populate_graph(dot, layer.children)
        
