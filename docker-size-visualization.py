@@ -15,6 +15,8 @@ class LayerImage:
         self.created = created
         self.created_by = created_by
         self.tags = tags
+        self.subtotal = 0
+        self.running_total = 0
         self.children: List[LayerImage] = []
 
     def name(self) -> str:
@@ -30,12 +32,47 @@ class LayerImage:
             res = ''
 
             tags = set([ t.split(':')[1] for t in self.tags ])
-            for tag in tags:
-                res += (tag + ',')
-
-            return res[:-1] # remove the last comma
+            return ','.join(tags)
         else:
             return self.created_by[0:40]
+
+    def set_subtotal(self, size: int):
+        self.subtotal = size
+    
+    def set_running_total(self, size: int):
+        self.running_total = size
+
+    def tooltip(self) -> str:
+        things_to_include=[
+            f'subtotal ratio: {self.sub_total_ratio()}',
+            f'layer size: {format_number(self.size)}',
+            f'subtotal size: {format_number(self.subtotal)}',
+            f'running total: {format_number(self.running_total)}',
+            self.created_by
+        ]
+
+        return '\n'.join(things_to_include)
+
+    def sub_total_ratio(self) -> str:
+        if self.subtotal == 0:
+            return 0
+        else:
+            return self.size / self.subtotal
+
+    def sub_total_ratio_display(self) -> str:
+        if self.subtotal == 0:
+            return '0.00001'
+        else:
+            res = self.size / self.subtotal
+            # extremes of 1 or 0 gives a weird gradient in graphviz
+            # so just give it a number close enough to either end
+            if self.size == 0:
+                return '0.0001'
+            if res == 1:
+                return '0.9999'
+            else:
+                return str(res)
+
 
     def __repr__(self):
        return self.pretty_print(0, 0, 0, '')
@@ -162,11 +199,36 @@ def doChildMatch(image1: LayerImage, image2: LayerImage) -> bool:
            return True
     return False
 
+def populate_subtotal(layer: LayerImage, sub_total_parents: List[LayerImage], subtotal: int, running_total: int):
+    sub_total_parents.append(layer)
+
+    subtotal += layer.size
+    running_total += layer.size
+
+    layer.set_running_total(running_total)
+    not_single_child = len(layer.children) != 1
+
+    if not_single_child:
+        for sub_parent in sub_total_parents:
+            sub_parent.set_subtotal(subtotal) 
+
+    for child in layer.children:
+        next_subtotal_parents = [] if not_single_child else sub_total_parents
+        next_subtotal = 0 if not_single_child else subtotal
+        populate_subtotal(child, next_subtotal_parents, subtotal=next_subtotal, running_total=running_total)
+
 
 def populate_graph(dot: graphviz.Digraph, layer_tree: List[LayerImage]):
     for layer in layer_tree:
         shape = 'doublecircle' if layer.tags is not None and len(layer.tags) > 0 else 'oval'
-        dot.node(layer.name(), label=layer.graph_label(), tooltip=layer.created_by, shape=shape)
+        dot.node(
+            layer.name(),
+            label=layer.graph_label(),
+            tooltip=layer.tooltip(),
+            shape=shape,
+            style='filled',
+            fillcolor=f'yellow;{layer.sub_total_ratio_display()}:transparent'
+        )
 
         populate_graph(dot, layer.children)
        
@@ -182,8 +244,10 @@ def do_thing(repository_name, versions):
 
     list_of_layers = dict(get_layer_tree(i) for i in image_tags)
     layer_tree = compare(list_of_layers)
+    
+    for l in layer_tree:
+        populate_subtotal(l, [], 0, 0)
 
-    # print(layer_tree)
 
     dot = graphviz.Digraph(comment="bobs", format="svg")
     populate_graph(dot, layer_tree)
