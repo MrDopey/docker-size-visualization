@@ -2,9 +2,10 @@ from typing import List, Dict
 
 import docker
 import click
+import graphviz
+import hashlib
 
 client = docker.from_env()
-
 
 class LayerImage:
     def __init__(self, id: str, size: int, comment: str, created: int, created_by: str, tags: List[str]):
@@ -15,6 +16,26 @@ class LayerImage:
         self.created_by = created_by
         self.tags = tags
         self.children: List[LayerImage] = []
+
+    def name(self) -> str:
+        # if self.id != '<missing>':
+        #     return self.id # TODO: self.id has sha256:123 prefix which messes with the graph
+        # else:
+            id_key = self.created_by + str(self.size) + str(self.created)
+            return 'cust-' + hashlib.md5(id_key.encode('utf-8')).hexdigest()
+    
+    def graph_label(self) -> str:
+         # Use docker tag if it exists otherwise the command that was used to create the layer
+        if self.tags is not None and len(self.tags) > 0:
+            res = ''
+
+            tags = set([ t.split(':')[1] for t in self.tags ])
+            for tag in tags:
+                res += (tag + ',')
+
+            return res[:-1] # remove the last comma
+        else:
+            return self.created_by[0:40]
 
     def __repr__(self):
        return self.pretty_print(0, 0, 0, '')
@@ -141,6 +162,16 @@ def doChildMatch(image1: LayerImage, image2: LayerImage) -> bool:
            return True
     return False
 
+
+def populate_graph(dot: graphviz.Digraph, layer_tree: List[LayerImage]):
+    for layer in layer_tree:
+        dot.node(layer.name(), layer.graph_label())
+
+        populate_graph(dot, layer.children)
+       
+        for child in layer.children:
+            dot.edge(layer.name(), child.name())
+
 @click.command()
 @click.option("-rn", "--repository-name", required=True, type=str)
 @click.option("-v", "--versions", required=True, multiple=True)
@@ -151,7 +182,12 @@ def do_thing(repository_name, versions):
     list_of_layers = dict(get_layer_tree(i) for i in image_tags)
     layer_tree = compare(list_of_layers)
 
-    print(layer_tree)
+    # print(layer_tree)
+
+    dot = graphviz.Digraph(comment="bobs", format="svg")
+    populate_graph(dot, layer_tree)
+
+    dot.render(directory='output/' + repository_name).replace('\\', '/')
 
 if __name__ == '__main__':
     do_thing()
