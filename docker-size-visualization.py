@@ -27,14 +27,22 @@ class LayerImage:
             return 'cust-' + hashlib.md5(id_key.encode('utf-8')).hexdigest()
     
     def graph_label(self) -> str:
-         # Use docker tag if it exists otherwise the command that was used to create the layer
-        if self.tags is not None and len(self.tags) > 0:
-            res = ''
+        things_to_include=[
+            f'subtotal ratio: {self.sub_total_ratio()}',
+            f'layer size: {format_number(self.size)}',
+            f'subtotal size: {format_number(self.subtotal)}',
+            f'running total: {format_number(self.running_total)}',
+        ]
 
-            tags = set([ t.split(':')[1] for t in self.tags ])
-            return ','.join(tags)
-        else:
-            return self.created_by[0:40]
+        if self.tags is not None and len(self.tags) > 0:
+            tags = set([ t.split(':')[-1] for t in self.tags ])
+            tag_text = ','.join(tags)
+            things_to_include.append(f'tags: {tag_text}')
+
+        things_to_include.append(
+            self.created_by[:40]
+        )
+        return '\n'.join(things_to_include)
 
     def set_subtotal(self, size: int):
         self.subtotal = size
@@ -43,15 +51,7 @@ class LayerImage:
         self.running_total = size
 
     def tooltip(self) -> str:
-        things_to_include=[
-            f'subtotal ratio: {self.sub_total_ratio()}',
-            f'layer size: {format_number(self.size)}',
-            f'subtotal size: {format_number(self.subtotal)}',
-            f'running total: {format_number(self.running_total)}',
-            self.created_by
-        ]
-
-        return '\n'.join(things_to_include)
+        return self.created_by
 
     def sub_total_ratio(self) -> str:
         if self.subtotal == 0:
@@ -63,10 +63,10 @@ class LayerImage:
         if self.subtotal == 0:
             return '0.00001'
         else:
-            res = self.size / self.subtotal
+            res = round(self.size / self.subtotal, 4)
             # extremes of 1 or 0 gives a weird gradient in graphviz
             # so just give it a number close enough to either end
-            if self.size == 0:
+            if res == 0:
                 return '0.0001'
             if res == 1:
                 return '0.9999'
@@ -220,7 +220,7 @@ def populate_subtotal(layer: LayerImage, sub_total_parents: List[LayerImage], su
 
 def populate_graph(dot: graphviz.Digraph, layer_tree: List[LayerImage]):
     for layer in layer_tree:
-        shape = 'doublecircle' if layer.tags is not None and len(layer.tags) > 0 else 'oval'
+        shape = 'pentagon' if layer.tags is not None and len(layer.tags) > 0 else 'box'
         dot.node(
             layer.name(),
             label=layer.graph_label(),
