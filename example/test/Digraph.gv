@@ -1,0 +1,228 @@
+// bobs
+digraph {
+	"cust-ee47e590596e3db331a52fa2caef2e01" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 104.9mb
+running total: 0b
+WORKDIR /app" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="WORKDIR /app"]
+	"cust-bc3a5f2cd9063b0295d3d4d30bd3395e" [label="subtotal ratio: 0.09090909090909091
+layer size: 9.54mb
+subtotal size: 104.9mb
+running total: 9.54mb
+COPY 10.txt . # buildkit" fillcolor="yellow;0.0909:transparent" shape=box style=filled tooltip="COPY 10.txt . # buildkit"]
+	"cust-a26d8d03d56b3abb2cc1b7631a37a2a9" [label="subtotal ratio: 0.9090909090909091
+layer size: 95.37mb
+subtotal size: 104.9mb
+running total: 104.9mb
+tags: 0.1
+COPY 100.txt . # buildkit" fillcolor="yellow;0.9091:transparent" shape=pentagon style=filled tooltip="COPY 100.txt . # buildkit"]
+	"cust-bc3a5f2cd9063b0295d3d4d30bd3395e" -> "cust-a26d8d03d56b3abb2cc1b7631a37a2a9"
+	"cust-ee47e590596e3db331a52fa2caef2e01" -> "cust-bc3a5f2cd9063b0295d3d4d30bd3395e"
+	"cust-b618648a28efa3283db082dddb20effd" [label="subtotal ratio: 1.0
+layer size: 7.04mb
+subtotal size: 7.04mb
+running total: 7.04mb
+/bin/sh -c #(nop) ADD file:1f4eb46669b5b" fillcolor="yellow;0.9999:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop) ADD file:1f4eb46669b5b6275af19eb7471a6899a61c276aa7d925b8ae99310b14b75b92 in / "]
+	"cust-8a5c46cda4890b55548b684c2d8807f7" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 7.04mb
+running total: 7.04mb
+/bin/sh -c #(nop)  CMD [\"/bin/sh\"]" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop)  CMD [\"/bin/sh\"]"]
+	"cust-df95fe6bd8de8f406ef9c0875d8c8956" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 7.04mb
+running total: 7.04mb
+WORKDIR /app" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="WORKDIR /app"]
+	"cust-3850d1f4515020590a8985cc5227718c" [label="subtotal ratio: 0.09090909090909091
+layer size: 9.54mb
+subtotal size: 104.9mb
+running total: 16.57mb
+COPY 10.txt . # buildkit" fillcolor="yellow;0.0909:transparent" shape=box style=filled tooltip="COPY 10.txt . # buildkit"]
+	"cust-0df673f7a77784774ff6fc96b61d44db" [label="subtotal ratio: 0.9090909090909091
+layer size: 95.37mb
+subtotal size: 104.9mb
+running total: 111.94mb
+tags: 0.2
+COPY 100.txt . # buildkit" fillcolor="yellow;0.9091:transparent" shape=pentagon style=filled tooltip="COPY 100.txt . # buildkit"]
+	"cust-7279b8df19fd069935cee28360d55d83" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 104.9mb
+running total: 111.94mb
+tags: 0.3
+RUN /bin/sh -c rm 10.txt # buildkit" fillcolor="yellow;0.0001:transparent" shape=pentagon style=filled tooltip="RUN /bin/sh -c rm 10.txt # buildkit"]
+	"cust-11a1539bb7c38dc2ccd380f90d01e6de" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 104.9mb
+running total: 111.94mb
+tags: 0.4,0.5
+RUN /bin/sh -c rm 100.txt # buildkit" fillcolor="yellow;0.0001:transparent" shape=pentagon style=filled tooltip="RUN /bin/sh -c rm 100.txt # buildkit"]
+	"cust-7279b8df19fd069935cee28360d55d83" -> "cust-11a1539bb7c38dc2ccd380f90d01e6de"
+	"cust-0df673f7a77784774ff6fc96b61d44db" -> "cust-7279b8df19fd069935cee28360d55d83"
+	"cust-3850d1f4515020590a8985cc5227718c" -> "cust-0df673f7a77784774ff6fc96b61d44db"
+	"cust-ee47ce31f690e2b0b12c6c5f8f34034d" [label="subtotal ratio: 0.09090909090909091
+layer size: 9.54mb
+subtotal size: 104.9mb
+running total: 16.57mb
+COPY 10.txt . # buildkit" fillcolor="yellow;0.0909:transparent" shape=box style=filled tooltip="COPY 10.txt . # buildkit"]
+	"cust-595732c5886b0e735be4d16d802f425b" [label="subtotal ratio: 0.9090909090909091
+layer size: 95.37mb
+subtotal size: 104.9mb
+running total: 111.94mb
+COPY 100.txt . # buildkit" fillcolor="yellow;0.9091:transparent" shape=box style=filled tooltip="COPY 100.txt . # buildkit"]
+	"cust-b19f0504030ce731387ab8f35edf7d7c" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 104.9mb
+running total: 111.94mb
+RUN /bin/sh -c rm 10.txt # buildkit" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="RUN /bin/sh -c rm 10.txt # buildkit"]
+	"cust-378c1080a7e7cd7aa16c43db9b0750db" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 104.9mb
+running total: 111.94mb
+tags: 0.6
+RUN /bin/sh -c rm 100.txt # buildkit" fillcolor="yellow;0.0001:transparent" shape=pentagon style=filled tooltip="RUN /bin/sh -c rm 100.txt # buildkit"]
+	"cust-b19f0504030ce731387ab8f35edf7d7c" -> "cust-378c1080a7e7cd7aa16c43db9b0750db"
+	"cust-595732c5886b0e735be4d16d802f425b" -> "cust-b19f0504030ce731387ab8f35edf7d7c"
+	"cust-ee47ce31f690e2b0b12c6c5f8f34034d" -> "cust-595732c5886b0e735be4d16d802f425b"
+	"cust-1b2ed788aa2f664b91fab7c9f198e90b" [label="subtotal ratio: 0.09090909090909091
+layer size: 9.54mb
+subtotal size: 104.9mb
+running total: 16.57mb
+COPY 10.txt . # buildkit" fillcolor="yellow;0.0909:transparent" shape=box style=filled tooltip="COPY 10.txt . # buildkit"]
+	"cust-d40671293bcfbef786139da19a979e43" [label="subtotal ratio: 0.9090909090909091
+layer size: 95.37mb
+subtotal size: 104.9mb
+running total: 111.94mb
+COPY 100.txt . # buildkit" fillcolor="yellow;0.9091:transparent" shape=box style=filled tooltip="COPY 100.txt . # buildkit"]
+	"cust-b19f90a737ee13909058669b04a5f5ff" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 104.9mb
+running total: 111.94mb
+RUN /bin/sh -c rm 10.txt # buildkit" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="RUN /bin/sh -c rm 10.txt # buildkit"]
+	"cust-3d547c7ce4e64dcb09edc5397d1af210" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 104.9mb
+running total: 111.94mb
+tags: 0.7
+RUN /bin/sh -c rm 100.txt # buildkit" fillcolor="yellow;0.0001:transparent" shape=pentagon style=filled tooltip="RUN /bin/sh -c rm 100.txt # buildkit"]
+	"cust-b19f90a737ee13909058669b04a5f5ff" -> "cust-3d547c7ce4e64dcb09edc5397d1af210"
+	"cust-d40671293bcfbef786139da19a979e43" -> "cust-b19f90a737ee13909058669b04a5f5ff"
+	"cust-1b2ed788aa2f664b91fab7c9f198e90b" -> "cust-d40671293bcfbef786139da19a979e43"
+	"cust-3fa333c443a0a81304d4be13465001fb" [label="subtotal ratio: 1.0
+layer size: 9.54mb
+subtotal size: 9.54mb
+running total: 16.57mb
+COPY 10.txt . # buildkit" fillcolor="yellow;0.9999:transparent" shape=box style=filled tooltip="COPY 10.txt . # buildkit"]
+	"cust-bda95dd74fdcbab1e919e43a671b8469" [label="subtotal ratio: 1.0
+layer size: 95.37mb
+subtotal size: 95.37mb
+running total: 111.94mb
+COPY 100.txt . # buildkit" fillcolor="yellow;0.9999:transparent" shape=box style=filled tooltip="COPY 100.txt . # buildkit"]
+	"cust-9363365b169bf7334724e16b537ae8ff" [label="subtotal ratio: 0
+layer size: 0b
+subtotal size: 0b
+running total: 111.94mb
+RUN /bin/sh -c rm 10.txt # buildkit" fillcolor="yellow;0.00001:transparent" shape=box style=filled tooltip="RUN /bin/sh -c rm 10.txt # buildkit"]
+	"cust-315529fb2474d9ceb1de1e00b5ed6c16" [label="subtotal ratio: 0
+layer size: 0b
+subtotal size: 0b
+running total: 111.94mb
+tags: 0.8
+RUN /bin/sh -c rm 100.txt # buildkit" fillcolor="yellow;0.00001:transparent" shape=pentagon style=filled tooltip="RUN /bin/sh -c rm 100.txt # buildkit"]
+	"cust-9363365b169bf7334724e16b537ae8ff" -> "cust-315529fb2474d9ceb1de1e00b5ed6c16"
+	"cust-7cb25fee5a13f3a132f251b52bfac3eb" [label="subtotal ratio: 1.0
+layer size: 4b
+subtotal size: 4b
+running total: 111.94mb
+RUN /bin/sh -c echo \"tom\" > something.tx" fillcolor="yellow;0.9999:transparent" shape=box style=filled tooltip="RUN /bin/sh -c echo \"tom\" > something.txt # buildkit"]
+	"cust-52f0d3f42247b29bfa17ed5face23e8e" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 4b
+running total: 111.94mb
+RUN /bin/sh -c rm 10.txt # buildkit" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="RUN /bin/sh -c rm 10.txt # buildkit"]
+	"cust-55d0390cc76e3459308b9dbc1ca4145e" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 4b
+running total: 111.94mb
+tags: 0.11
+RUN /bin/sh -c rm 100.txt # buildkit" fillcolor="yellow;0.0001:transparent" shape=pentagon style=filled tooltip="RUN /bin/sh -c rm 100.txt # buildkit"]
+	"cust-52f0d3f42247b29bfa17ed5face23e8e" -> "cust-55d0390cc76e3459308b9dbc1ca4145e"
+	"cust-7cb25fee5a13f3a132f251b52bfac3eb" -> "cust-52f0d3f42247b29bfa17ed5face23e8e"
+	"cust-df66ca68a53e7da49fcc2c235cbe6cf2" [label="subtotal ratio: 1.0
+layer size: 4b
+subtotal size: 4b
+running total: 111.94mb
+RUN /bin/sh -c echo \"bob\" > something.tx" fillcolor="yellow;0.9999:transparent" shape=box style=filled tooltip="RUN /bin/sh -c echo \"bob\" > something.txt # buildkit"]
+	"cust-33cab5d274d04924bfd48113d28627b4" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 4b
+running total: 111.94mb
+RUN /bin/sh -c rm 10.txt # buildkit" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="RUN /bin/sh -c rm 10.txt # buildkit"]
+	"cust-eb3ab746ce39c425f6743eb7842b737b" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 4b
+running total: 111.94mb
+tags: 0.12
+RUN /bin/sh -c rm 100.txt # buildkit" fillcolor="yellow;0.0001:transparent" shape=pentagon style=filled tooltip="RUN /bin/sh -c rm 100.txt # buildkit"]
+	"cust-33cab5d274d04924bfd48113d28627b4" -> "cust-eb3ab746ce39c425f6743eb7842b737b"
+	"cust-df66ca68a53e7da49fcc2c235cbe6cf2" -> "cust-33cab5d274d04924bfd48113d28627b4"
+	"cust-bda95dd74fdcbab1e919e43a671b8469" -> "cust-9363365b169bf7334724e16b537ae8ff"
+	"cust-bda95dd74fdcbab1e919e43a671b8469" -> "cust-7cb25fee5a13f3a132f251b52bfac3eb"
+	"cust-bda95dd74fdcbab1e919e43a671b8469" -> "cust-df66ca68a53e7da49fcc2c235cbe6cf2"
+	"cust-84ea415905024a6f7b076a2e56b2832b" [label="subtotal ratio: 3.9999998400000067e-08
+layer size: 4b
+subtotal size: 95.37mb
+running total: 16.57mb
+RUN /bin/sh -c echo \"bob\" > something.tx" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="RUN /bin/sh -c echo \"bob\" > something.txt # buildkit"]
+	"cust-8ecaee10dd1419050f70e76963f61b09" [label="subtotal ratio: 0.9999999600000016
+layer size: 95.37mb
+subtotal size: 95.37mb
+running total: 111.94mb
+COPY 100.txt . # buildkit" fillcolor="yellow;0.9999:transparent" shape=box style=filled tooltip="COPY 100.txt . # buildkit"]
+	"cust-aa2d443e8c4f220e8875e8881386ecde" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 95.37mb
+running total: 111.94mb
+RUN /bin/sh -c rm 10.txt # buildkit" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="RUN /bin/sh -c rm 10.txt # buildkit"]
+	"cust-45514043c1b349f62e88ea160678ae2e" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 95.37mb
+running total: 111.94mb
+tags: 0.9
+RUN /bin/sh -c rm 100.txt # buildkit" fillcolor="yellow;0.0001:transparent" shape=pentagon style=filled tooltip="RUN /bin/sh -c rm 100.txt # buildkit"]
+	"cust-aa2d443e8c4f220e8875e8881386ecde" -> "cust-45514043c1b349f62e88ea160678ae2e"
+	"cust-8ecaee10dd1419050f70e76963f61b09" -> "cust-aa2d443e8c4f220e8875e8881386ecde"
+	"cust-84ea415905024a6f7b076a2e56b2832b" -> "cust-8ecaee10dd1419050f70e76963f61b09"
+	"cust-2f866023b95f12c0b3e02d54cb0a5f1f" [label="subtotal ratio: 3.9999998400000067e-08
+layer size: 4b
+subtotal size: 95.37mb
+running total: 16.57mb
+RUN /bin/sh -c echo \"tom\" > something.tx" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="RUN /bin/sh -c echo \"tom\" > something.txt # buildkit"]
+	"cust-a7a6d07ac24b4c0dbdd3fea00a773fad" [label="subtotal ratio: 0.9999999600000016
+layer size: 95.37mb
+subtotal size: 95.37mb
+running total: 111.94mb
+COPY 100.txt . # buildkit" fillcolor="yellow;0.9999:transparent" shape=box style=filled tooltip="COPY 100.txt . # buildkit"]
+	"cust-d19b112e43f9958b69343ab1b8047989" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 95.37mb
+running total: 111.94mb
+RUN /bin/sh -c rm 10.txt # buildkit" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="RUN /bin/sh -c rm 10.txt # buildkit"]
+	"cust-8573576ef0c63f9aa5fa655a93edf788" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 95.37mb
+running total: 111.94mb
+tags: 0.10
+RUN /bin/sh -c rm 100.txt # buildkit" fillcolor="yellow;0.0001:transparent" shape=pentagon style=filled tooltip="RUN /bin/sh -c rm 100.txt # buildkit"]
+	"cust-d19b112e43f9958b69343ab1b8047989" -> "cust-8573576ef0c63f9aa5fa655a93edf788"
+	"cust-a7a6d07ac24b4c0dbdd3fea00a773fad" -> "cust-d19b112e43f9958b69343ab1b8047989"
+	"cust-2f866023b95f12c0b3e02d54cb0a5f1f" -> "cust-a7a6d07ac24b4c0dbdd3fea00a773fad"
+	"cust-3fa333c443a0a81304d4be13465001fb" -> "cust-bda95dd74fdcbab1e919e43a671b8469"
+	"cust-3fa333c443a0a81304d4be13465001fb" -> "cust-84ea415905024a6f7b076a2e56b2832b"
+	"cust-3fa333c443a0a81304d4be13465001fb" -> "cust-2f866023b95f12c0b3e02d54cb0a5f1f"
+	"cust-df95fe6bd8de8f406ef9c0875d8c8956" -> "cust-3850d1f4515020590a8985cc5227718c"
+	"cust-df95fe6bd8de8f406ef9c0875d8c8956" -> "cust-ee47ce31f690e2b0b12c6c5f8f34034d"
+	"cust-df95fe6bd8de8f406ef9c0875d8c8956" -> "cust-1b2ed788aa2f664b91fab7c9f198e90b"
+	"cust-df95fe6bd8de8f406ef9c0875d8c8956" -> "cust-3fa333c443a0a81304d4be13465001fb"
+	"cust-8a5c46cda4890b55548b684c2d8807f7" -> "cust-df95fe6bd8de8f406ef9c0875d8c8956"
+	"cust-b618648a28efa3283db082dddb20effd" -> "cust-8a5c46cda4890b55548b684c2d8807f7"
+}

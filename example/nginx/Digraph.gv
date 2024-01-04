@@ -1,0 +1,501 @@
+// bobs
+digraph {
+	"cust-53541bfe6935222bec4eabee250a11ca" [label="subtotal ratio: 0.17180371393759877
+layer size: 6.74mb
+subtotal size: 39.2mb
+running total: 6.74mb
+/bin/sh -c #(nop) ADD file:80331a5d882ac" fillcolor="yellow;0.1718:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop) ADD file:80331a5d882ac8a70763f4b19e06f2e04ea3dca34ae6d92810815b170b3c806c in / "]
+	"cust-7369a17b2c9f8e36a755ec93d25b0458" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 39.2mb
+running total: 6.74mb
+/bin/sh -c #(nop)  CMD [\"/bin/sh\"]" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop)  CMD [\"/bin/sh\"]"]
+	"cust-d82e2173cd552340465b1e45a1141316" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 39.2mb
+running total: 6.74mb
+LABEL maintainer=NGINX Docker Maintainer" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="LABEL maintainer=NGINX Docker Maintainers <docker-maint@nginx.com>"]
+	"cust-6e79247ac8870b6dd337b43dce174e94" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 39.2mb
+running total: 6.74mb
+ENV NGINX_VERSION=1.24.0" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="ENV NGINX_VERSION=1.24.0"]
+	"cust-9cd6ba048c4969a203d98fd1ff965ae1" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 39.2mb
+running total: 6.74mb
+ENV PKG_RELEASE=1" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="ENV PKG_RELEASE=1"]
+	"cust-7665f143cd7739b8e4e4e338e3431196" [label="subtotal ratio: 0.10824234629368275
+layer size: 4.24mb
+subtotal size: 39.2mb
+running total: 10.98mb
+RUN /bin/sh -c set -x     && addgroup -g" fillcolor="yellow;0.1082:transparent" shape=box style=filled tooltip="RUN /bin/sh -c set -x     && addgroup -g 101 -S nginx     && adduser -S -D -H -u 101 -h /var/cache/nginx -s /sbin/nologin -G nginx -g nginx nginx     && apkArch=\"$(cat /etc/apk/arch)\"     && nginxPackages=\"         nginx=${NGINX_VERSION}-r${PKG_RELEASE}     \"     && apk add --no-cache --virtual .checksum-deps         openssl     && case \"$apkArch\" in         x86_64|aarch64)             set -x             && KEY_SHA512=\"e09fa32f0a0eab2b879ccbbc4d0e4fb9751486eedda75e35fac65802cc9faa266425edf83e261137a2f4d16281ce2c1a5f4502930fe75154723da014214f0655\"             && wget -O /tmp/nginx_signing.rsa.pub https://nginx.org/keys/nginx_signing.rsa.pub             && if echo \"$KEY_SHA512 */tmp/nginx_signing.rsa.pub\" | sha512sum -c -; then                 echo \"key verification succeeded!\";                 mv /tmp/nginx_signing.rsa.pub /etc/apk/keys/;             else                 echo \"key verification failed!\";                 exit 1;             fi             && apk add -X \"https://nginx.org/packages/alpine/v$(egrep -o '^[0-9]+\.[0-9]+' /etc/alpine-release)/main\" --no-cache $nginxPackages             ;;         *)             set -x             && tempDir=\"$(mktemp -d)\"             && chown nobody:nobody $tempDir             && apk add --no-cache --virtual .build-deps                 gcc                 libc-dev                 make                 openssl-dev                 pcre2-dev                 zlib-dev                 linux-headers                 bash                 alpine-sdk                 findutils             && su nobody -s /bin/sh -c \"                 export HOME=${tempDir}                 && cd ${tempDir}                 && curl -f -O https://hg.nginx.org/pkg-oss/archive/${NGINX_VERSION}-${PKG_RELEASE}.tar.gz                 && PKGOSSCHECKSUM=\"dc47dbaeb1c0874b264d34ddfec40e7d2b814e7db48d144e12d5991c743ef5fcf780ecbab72324e562dd84bb9c0e4dd71d14850b20ceaf470c46f8fe7510275b *${NGINX_VERSION}-${PKG_RELEASE}.tar.gz\"                 && if [ \"\$(openssl sha512 -r ${NGINX_VERSION}-${PKG_RELEASE}.tar.gz)\" = \"\$PKGOSSCHECKSUM\" ]; then                     echo \"pkg-oss tarball checksum verification succeeded!\";                 else                     echo \"pkg-oss tarball checksum verification failed!\";                     exit 1;                 fi                 && tar xzvf ${NGINX_VERSION}-${PKG_RELEASE}.tar.gz                 && cd pkg-oss-${NGINX_VERSION}-${PKG_RELEASE}                 && cd alpine                 && make base                 && apk index -o ${tempDir}/packages/alpine/${apkArch}/APKINDEX.tar.gz ${tempDir}/packages/alpine/${apkArch}/*.apk                 && abuild-sign -k ${tempDir}/.abuild/abuild-key.rsa ${tempDir}/packages/alpine/${apkArch}/APKINDEX.tar.gz                 \"             && cp ${tempDir}/.abuild/abuild-key.rsa.pub /etc/apk/keys/             && apk del .build-deps             && apk add -X ${tempDir}/packages/alpine/ --no-cache $nginxPackages             ;;     esac     && apk del .checksum-deps     && if [ -n \"$tempDir\" ]; then rm -rf \"$tempDir\"; fi     && if [ -n \"/etc/apk/keys/abuild-key.rsa.pub\" ]; then rm -f /etc/apk/keys/abuild-key.rsa.pub; fi     && if [ -n \"/etc/apk/keys/nginx_signing.rsa.pub\" ]; then rm -f /etc/apk/keys/nginx_signing.rsa.pub; fi     && apk add --no-cache --virtual .gettext gettext     && mv /usr/bin/envsubst /tmp/         && runDeps=\"$(         scanelf --needed --nobanner /tmp/envsubst             | awk '{ gsub(/,/, \"\nso:\", $2); print \"so:\" $2 }'             | sort -u             | xargs -r apk info --installed             | sort -u     )\"     && apk add --no-cache $runDeps     && apk del .gettext     && mv /tmp/envsubst /usr/local/bin/     && apk add --no-cache tzdata     && ln -sf /dev/stdout /var/log/nginx/access.log     && ln -sf /dev/stderr /var/log/nginx/error.log     && mkdir /docker-entrypoint.d # buildkit"]
+	"cust-9515a2e7a4b032ac3a991e5f99ca92ec" [label="subtotal ratio: 3.9311996277037184e-05
+layer size: 1.58kb
+subtotal size: 39.2mb
+running total: 10.98mb
+COPY docker-entrypoint.sh / # buildkit" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="COPY docker-entrypoint.sh / # buildkit"]
+	"cust-4149920cb8a6a6dd13a42ca69f822f47" [label="subtotal ratio: 5.164564857435021e-05
+layer size: 2.07kb
+subtotal size: 39.2mb
+running total: 10.98mb
+COPY 10-listen-on-ipv6-by-default.sh /do" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="COPY 10-listen-on-ipv6-by-default.sh /docker-entrypoint.d # buildkit"]
+	"cust-e03e18bba0cf73a264c0be126b0e824e" [label="subtotal ratio: 3.096792776031457e-05
+layer size: 1.24kb
+subtotal size: 39.2mb
+running total: 10.98mb
+COPY 20-envsubst-on-templates.sh /docker" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="COPY 20-envsubst-on-templates.sh /docker-entrypoint.d # buildkit"]
+	"cust-9d6271c937d159fd6d7fb1a1350847e3" [label="subtotal ratio: 0.00011241382103724557
+layer size: 4.51kb
+subtotal size: 39.2mb
+running total: 10.99mb
+COPY 30-tune-worker-processes.sh /docker" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="COPY 30-tune-worker-processes.sh /docker-entrypoint.d # buildkit"]
+	"cust-ceebefd264f7ce5f319fb15cdeca0007" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 39.2mb
+running total: 10.99mb
+ENTRYPOINT [\"/docker-entrypoint.sh\"]" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="ENTRYPOINT [\"/docker-entrypoint.sh\"]"]
+	"cust-d5c08b69e15dfcde93ce0ecd5d5bbf05" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 39.2mb
+running total: 10.99mb
+EXPOSE map[80/tcp:{}]" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="EXPOSE map[80/tcp:{}]"]
+	"cust-aeb3bc0149ff32cb15860db3591aa8ac" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 39.2mb
+running total: 10.99mb
+STOPSIGNAL SIGQUIT" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="STOPSIGNAL SIGQUIT"]
+	"cust-aa93ff69efb9a9037b6e3e507c6632b4" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 39.2mb
+running total: 10.99mb
+CMD [\"nginx\" \"-g\" \"daemon off;\"]" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="CMD [\"nginx\" \"-g\" \"daemon off;\"]"]
+	"cust-2a6ffa40079e494cc3420f6e4bf97371" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 39.2mb
+running total: 10.99mb
+ENV NJS_VERSION=0.7.12" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="ENV NJS_VERSION=0.7.12"]
+	"cust-b2fba34117b09244ae3a1104056a5242" [label="subtotal ratio: 0.7197196003750695
+layer size: 28.21mb
+subtotal size: 39.2mb
+running total: 39.2mb
+tags: 1.24.0-alpine
+RUN /bin/sh -c set -x     && apkArch=\"$(" fillcolor="yellow;0.7197:transparent" shape=pentagon style=filled tooltip="RUN /bin/sh -c set -x     && apkArch=\"$(cat /etc/apk/arch)\"     && nginxPackages=\"         nginx=${NGINX_VERSION}-r${PKG_RELEASE}         nginx-module-xslt=${NGINX_VERSION}-r${PKG_RELEASE}         nginx-module-geoip=${NGINX_VERSION}-r${PKG_RELEASE}         nginx-module-image-filter=${NGINX_VERSION}-r${PKG_RELEASE}         nginx-module-njs=${NGINX_VERSION}.${NJS_VERSION}-r${PKG_RELEASE}     \"     && apk add --no-cache --virtual .checksum-deps         openssl     && case \"$apkArch\" in         x86_64|aarch64)             set -x             && KEY_SHA512=\"e09fa32f0a0eab2b879ccbbc4d0e4fb9751486eedda75e35fac65802cc9faa266425edf83e261137a2f4d16281ce2c1a5f4502930fe75154723da014214f0655\"             && wget -O /tmp/nginx_signing.rsa.pub https://nginx.org/keys/nginx_signing.rsa.pub             && if echo \"$KEY_SHA512 */tmp/nginx_signing.rsa.pub\" | sha512sum -c -; then                 echo \"key verification succeeded!\";                 mv /tmp/nginx_signing.rsa.pub /etc/apk/keys/;             else                 echo \"key verification failed!\";                 exit 1;             fi             && apk add -X \"https://nginx.org/packages/alpine/v$(egrep -o '^[0-9]+\.[0-9]+' /etc/alpine-release)/main\" --no-cache $nginxPackages             ;;         *)             set -x             && tempDir=\"$(mktemp -d)\"             && chown nobody:nobody $tempDir             && apk add --no-cache --virtual .build-deps                 gcc                 libc-dev                 make                 openssl-dev                 pcre2-dev                 zlib-dev                 linux-headers                 libxslt-dev                 gd-dev                 geoip-dev                 libedit-dev                 bash                 alpine-sdk                 findutils             && su nobody -s /bin/sh -c \"                 export HOME=${tempDir}                 && cd ${tempDir}                 && curl -f -O https://hg.nginx.org/pkg-oss/archive/${NGINX_VERSION}-${PKG_RELEASE}.tar.gz                 && PKGOSSCHECKSUM=\"dc47dbaeb1c0874b264d34ddfec40e7d2b814e7db48d144e12d5991c743ef5fcf780ecbab72324e562dd84bb9c0e4dd71d14850b20ceaf470c46f8fe7510275b *${NGINX_VERSION}-${PKG_RELEASE}.tar.gz\"                 && if [ \"\$(openssl sha512 -r ${NGINX_VERSION}-${PKG_RELEASE}.tar.gz)\" = \"\$PKGOSSCHECKSUM\" ]; then                     echo \"pkg-oss tarball checksum verification succeeded!\";                 else                     echo \"pkg-oss tarball checksum verification failed!\";                     exit 1;                 fi                 && tar xzvf ${NGINX_VERSION}-${PKG_RELEASE}.tar.gz                 && cd pkg-oss-${NGINX_VERSION}-${PKG_RELEASE}                 && cd alpine                 && make module-geoip module-image-filter module-njs module-xslt                 && apk index -o ${tempDir}/packages/alpine/${apkArch}/APKINDEX.tar.gz ${tempDir}/packages/alpine/${apkArch}/*.apk                 && abuild-sign -k ${tempDir}/.abuild/abuild-key.rsa ${tempDir}/packages/alpine/${apkArch}/APKINDEX.tar.gz                 \"             && cp ${tempDir}/.abuild/abuild-key.rsa.pub /etc/apk/keys/             && apk del .build-deps             && apk add -X ${tempDir}/packages/alpine/ --no-cache $nginxPackages             ;;     esac     && apk del .checksum-deps     && if [ -n \"$tempDir\" ]; then rm -rf \"$tempDir\"; fi     && if [ -n \"/etc/apk/keys/abuild-key.rsa.pub\" ]; then rm -f /etc/apk/keys/abuild-key.rsa.pub; fi     && if [ -n \"/etc/apk/keys/nginx_signing.rsa.pub\" ]; then rm -f /etc/apk/keys/nginx_signing.rsa.pub; fi     && apk add --no-cache curl ca-certificates # buildkit"]
+	"cust-2a6ffa40079e494cc3420f6e4bf97371" -> "cust-b2fba34117b09244ae3a1104056a5242"
+	"cust-aa93ff69efb9a9037b6e3e507c6632b4" -> "cust-2a6ffa40079e494cc3420f6e4bf97371"
+	"cust-aeb3bc0149ff32cb15860db3591aa8ac" -> "cust-aa93ff69efb9a9037b6e3e507c6632b4"
+	"cust-d5c08b69e15dfcde93ce0ecd5d5bbf05" -> "cust-aeb3bc0149ff32cb15860db3591aa8ac"
+	"cust-ceebefd264f7ce5f319fb15cdeca0007" -> "cust-d5c08b69e15dfcde93ce0ecd5d5bbf05"
+	"cust-9d6271c937d159fd6d7fb1a1350847e3" -> "cust-ceebefd264f7ce5f319fb15cdeca0007"
+	"cust-e03e18bba0cf73a264c0be126b0e824e" -> "cust-9d6271c937d159fd6d7fb1a1350847e3"
+	"cust-4149920cb8a6a6dd13a42ca69f822f47" -> "cust-e03e18bba0cf73a264c0be126b0e824e"
+	"cust-9515a2e7a4b032ac3a991e5f99ca92ec" -> "cust-4149920cb8a6a6dd13a42ca69f822f47"
+	"cust-7665f143cd7739b8e4e4e338e3431196" -> "cust-9515a2e7a4b032ac3a991e5f99ca92ec"
+	"cust-9cd6ba048c4969a203d98fd1ff965ae1" -> "cust-7665f143cd7739b8e4e4e338e3431196"
+	"cust-6e79247ac8870b6dd337b43dce174e94" -> "cust-9cd6ba048c4969a203d98fd1ff965ae1"
+	"cust-d82e2173cd552340465b1e45a1141316" -> "cust-6e79247ac8870b6dd337b43dce174e94"
+	"cust-7369a17b2c9f8e36a755ec93d25b0458" -> "cust-d82e2173cd552340465b1e45a1141316"
+	"cust-53541bfe6935222bec4eabee250a11ca" -> "cust-7369a17b2c9f8e36a755ec93d25b0458"
+	"cust-4043593ed2263037a1f88f2cf9c49075" [label="subtotal ratio: 0.17026797088608192
+layer size: 6.72mb
+subtotal size: 39.49mb
+running total: 6.72mb
+/bin/sh -c #(nop) ADD file:9a4f77dfaba7f" fillcolor="yellow;0.1703:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop) ADD file:9a4f77dfaba7fd2aa78186e4ef0e7486ad55101cefc1fabbc1b385601bb38920 in / "]
+	"cust-8084460852dc537fba202662fc717296" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 39.49mb
+running total: 6.72mb
+/bin/sh -c #(nop)  CMD [\"/bin/sh\"]" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop)  CMD [\"/bin/sh\"]"]
+	"cust-5d002a41f843ce0e809ac7bed7cf68dd" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 39.49mb
+running total: 6.72mb
+/bin/sh -c #(nop)  LABEL maintainer=NGIN" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop)  LABEL maintainer=NGINX Docker Maintainers <docker-maint@nginx.com>"]
+	"cust-ac44119fedb98df68ef4e47fe0cf143f" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 39.49mb
+running total: 6.72mb
+/bin/sh -c #(nop)  ENV NGINX_VERSION=1.2" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop)  ENV NGINX_VERSION=1.25.0"]
+	"cust-1729898adce78d6f96e0551e1dd0d2d9" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 39.49mb
+running total: 6.72mb
+/bin/sh -c #(nop)  ENV PKG_RELEASE=1" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop)  ENV PKG_RELEASE=1"]
+	"cust-4bea7ce4cb1a9157b4fcc7744efb98e7" [label="subtotal ratio: 0.11469275652954039
+layer size: 4.53mb
+subtotal size: 39.49mb
+running total: 11.25mb
+/bin/sh -c set -x     && addgroup -g 101" fillcolor="yellow;0.1147:transparent" shape=box style=filled tooltip="/bin/sh -c set -x     && addgroup -g 101 -S nginx     && adduser -S -D -H -u 101 -h /var/cache/nginx -s /sbin/nologin -G nginx -g nginx nginx     && apkArch=\"$(cat /etc/apk/arch)\"     && nginxPackages=\"         nginx=${NGINX_VERSION}-r${PKG_RELEASE}     \"     && apk add --no-cache --virtual .checksum-deps         openssl     && case \"$apkArch\" in         x86_64|aarch64)             set -x             && KEY_SHA512=\"e09fa32f0a0eab2b879ccbbc4d0e4fb9751486eedda75e35fac65802cc9faa266425edf83e261137a2f4d16281ce2c1a5f4502930fe75154723da014214f0655\"             && wget -O /tmp/nginx_signing.rsa.pub https://nginx.org/keys/nginx_signing.rsa.pub             && if echo \"$KEY_SHA512 */tmp/nginx_signing.rsa.pub\" | sha512sum -c -; then                 echo \"key verification succeeded!\";                 mv /tmp/nginx_signing.rsa.pub /etc/apk/keys/;             else                 echo \"key verification failed!\";                 exit 1;             fi             && apk add -X \"https://nginx.org/packages/mainline/alpine/v$(egrep -o '^[0-9]+\.[0-9]+' /etc/alpine-release)/main\" --no-cache $nginxPackages             ;;         *)             set -x             && tempDir=\"$(mktemp -d)\"             && chown nobody:nobody $tempDir             && apk add --no-cache --virtual .build-deps                 gcc                 libc-dev                 make                 openssl-dev                 pcre2-dev                 zlib-dev                 linux-headers                 bash                 alpine-sdk                 findutils             && su nobody -s /bin/sh -c \"                 export HOME=${tempDir}                 && cd ${tempDir}                 && curl -f -O https://hg.nginx.org/pkg-oss/archive/${NGINX_VERSION}-${PKG_RELEASE}.tar.gz                 && PKGOSSCHECKSUM=\"18bee4bd498e0b8da765e8cd2d824e1027d40fd95d55fd59339cdb5d5e0e633795f4196c76045e86027cdfc6ab05a3cc0d39b25bd0a967f1edd47910d813262a *${NGINX_VERSION}-${PKG_RELEASE}.tar.gz\"                 && if [ \"\$(openssl sha512 -r ${NGINX_VERSION}-${PKG_RELEASE}.tar.gz)\" = \"\$PKGOSSCHECKSUM\" ]; then                     echo \"pkg-oss tarball checksum verification succeeded!\";                 else                     echo \"pkg-oss tarball checksum verification failed!\";                     exit 1;                 fi                 && tar xzvf ${NGINX_VERSION}-${PKG_RELEASE}.tar.gz                 && cd pkg-oss-${NGINX_VERSION}-${PKG_RELEASE}                 && cd alpine                 && make base                 && apk index -o ${tempDir}/packages/alpine/${apkArch}/APKINDEX.tar.gz ${tempDir}/packages/alpine/${apkArch}/*.apk                 && abuild-sign -k ${tempDir}/.abuild/abuild-key.rsa ${tempDir}/packages/alpine/${apkArch}/APKINDEX.tar.gz                 \"             && cp ${tempDir}/.abuild/abuild-key.rsa.pub /etc/apk/keys/             && apk del .build-deps             && apk add -X ${tempDir}/packages/alpine/ --no-cache $nginxPackages             ;;     esac     && apk del .checksum-deps     && if [ -n \"$tempDir\" ]; then rm -rf \"$tempDir\"; fi     && if [ -n \"/etc/apk/keys/abuild-key.rsa.pub\" ]; then rm -f /etc/apk/keys/abuild-key.rsa.pub; fi     && if [ -n \"/etc/apk/keys/nginx_signing.rsa.pub\" ]; then rm -f /etc/apk/keys/nginx_signing.rsa.pub; fi     && apk add --no-cache --virtual .gettext gettext     && mv /usr/bin/envsubst /tmp/         && runDeps=\"$(         scanelf --needed --nobanner /tmp/envsubst             | awk '{ gsub(/,/, \"\nso:\", $2); print \"so:\" $2 }'             | sort -u             | xargs -r apk info --installed             | sort -u     )\"     && apk add --no-cache $runDeps     && apk del .gettext     && mv /tmp/envsubst /usr/local/bin/     && apk add --no-cache tzdata     && ln -sf /dev/stdout /var/log/nginx/access.log     && ln -sf /dev/stderr /var/log/nginx/error.log     && mkdir /docker-entrypoint.d"]
+	"cust-6e2036255fbd72d3f4d63c606510b9e4" [label="subtotal ratio: 3.903045546923315e-05
+layer size: 1.58kb
+subtotal size: 39.49mb
+running total: 11.25mb
+/bin/sh -c #(nop) COPY file:7b307b62e822" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop) COPY file:7b307b62e82255f040c9812421a30090bf9abf3685f27b02d77fcca99f997911 in / "]
+	"cust-ad781dd61ef1160eb04157c267451ae2" [label="subtotal ratio: 5.127577782251359e-05
+layer size: 2.07kb
+subtotal size: 39.49mb
+running total: 11.26mb
+/bin/sh -c #(nop) COPY file:5c1827273434" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop) COPY file:5c18272734349488bd0c94ec8d382c872c1a0a435cca13bd4671353d6021d2cb in /docker-entrypoint.d "]
+	"cust-c062cb4da407b226ac5af15c26df8263" [label="subtotal ratio: 7.265074879421614e-05
+layer size: 2.94kb
+subtotal size: 39.49mb
+running total: 11.26mb
+/bin/sh -c #(nop) COPY file:36429cfeeb29" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop) COPY file:36429cfeeb299f9913b84ea136b004be12fbe4bb4f975a977a3608044e8bfa91 in /docker-entrypoint.d "]
+	"cust-3967147140324318cd9d6589621d7c5d" [label="subtotal ratio: 0.00011160874673473166
+layer size: 4.51kb
+subtotal size: 39.49mb
+running total: 11.26mb
+/bin/sh -c #(nop) COPY file:e57eef017a41" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop) COPY file:e57eef017a414ca793499729d80a7b9075790c9a804f930f1417e56d506970cf in /docker-entrypoint.d "]
+	"cust-4a52a2d38d16761c74294181dad27c90" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 39.49mb
+running total: 11.26mb
+/bin/sh -c #(nop)  ENTRYPOINT [\"/docker-" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop)  ENTRYPOINT [\"/docker-entrypoint.sh\"]"]
+	"cust-bb456e0630257e9555cd3de946d64a5a" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 39.49mb
+running total: 11.26mb
+/bin/sh -c #(nop)  EXPOSE 80" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop)  EXPOSE 80"]
+	"cust-060fd9fe5b059ede8790cf5ca2d608aa" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 39.49mb
+running total: 11.26mb
+/bin/sh -c #(nop)  STOPSIGNAL SIGQUIT" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop)  STOPSIGNAL SIGQUIT"]
+	"cust-947aa687335bd8a2ee9bf6f19948f530" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 39.49mb
+running total: 11.26mb
+/bin/sh -c #(nop)  CMD [\"nginx\" \"-g\" \"da" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop)  CMD [\"nginx\" \"-g\" \"daemon off;\"]"]
+	"cust-6ddee9c30869b865b7b91b804599ebc7" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 39.49mb
+running total: 11.26mb
+/bin/sh -c #(nop)  ENV NJS_VERSION=0.7.1" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop)  ENV NJS_VERSION=0.7.12"]
+	"cust-434f429de2042d15fcb42244260d3d63" [label="subtotal ratio: 0.714764706855557
+layer size: 28.22mb
+subtotal size: 39.49mb
+running total: 39.49mb
+tags: 1.25.0-alpine
+/bin/sh -c set -x     && apkArch=\"$(cat " fillcolor="yellow;0.7148:transparent" shape=pentagon style=filled tooltip="/bin/sh -c set -x     && apkArch=\"$(cat /etc/apk/arch)\"     && nginxPackages=\"         nginx=${NGINX_VERSION}-r${PKG_RELEASE}         nginx-module-xslt=${NGINX_VERSION}-r${PKG_RELEASE}         nginx-module-geoip=${NGINX_VERSION}-r${PKG_RELEASE}         nginx-module-image-filter=${NGINX_VERSION}-r${PKG_RELEASE}         nginx-module-njs=${NGINX_VERSION}.${NJS_VERSION}-r${PKG_RELEASE}     \"     && apk add --no-cache --virtual .checksum-deps         openssl     && case \"$apkArch\" in         x86_64|aarch64)             set -x             && KEY_SHA512=\"e09fa32f0a0eab2b879ccbbc4d0e4fb9751486eedda75e35fac65802cc9faa266425edf83e261137a2f4d16281ce2c1a5f4502930fe75154723da014214f0655\"             && wget -O /tmp/nginx_signing.rsa.pub https://nginx.org/keys/nginx_signing.rsa.pub             && if echo \"$KEY_SHA512 */tmp/nginx_signing.rsa.pub\" | sha512sum -c -; then                 echo \"key verification succeeded!\";                 mv /tmp/nginx_signing.rsa.pub /etc/apk/keys/;             else                 echo \"key verification failed!\";                 exit 1;             fi             && apk add -X \"https://nginx.org/packages/mainline/alpine/v$(egrep -o '^[0-9]+\.[0-9]+' /etc/alpine-release)/main\" --no-cache $nginxPackages             ;;         *)             set -x             && tempDir=\"$(mktemp -d)\"             && chown nobody:nobody $tempDir             && apk add --no-cache --virtual .build-deps                 gcc                 libc-dev                 make                 openssl-dev                 pcre2-dev                 zlib-dev                 linux-headers                 libxslt-dev                 gd-dev                 geoip-dev                 libedit-dev                 bash                 alpine-sdk                 findutils             && su nobody -s /bin/sh -c \"                 export HOME=${tempDir}                 && cd ${tempDir}                 && curl -f -O https://hg.nginx.org/pkg-oss/archive/${NGINX_VERSION}-${PKG_RELEASE}.tar.gz                 && PKGOSSCHECKSUM=\"18bee4bd498e0b8da765e8cd2d824e1027d40fd95d55fd59339cdb5d5e0e633795f4196c76045e86027cdfc6ab05a3cc0d39b25bd0a967f1edd47910d813262a *${NGINX_VERSION}-${PKG_RELEASE}.tar.gz\"                 && if [ \"\$(openssl sha512 -r ${NGINX_VERSION}-${PKG_RELEASE}.tar.gz)\" = \"\$PKGOSSCHECKSUM\" ]; then                     echo \"pkg-oss tarball checksum verification succeeded!\";                 else                     echo \"pkg-oss tarball checksum verification failed!\";                     exit 1;                 fi                 && tar xzvf ${NGINX_VERSION}-${PKG_RELEASE}.tar.gz                 && cd pkg-oss-${NGINX_VERSION}-${PKG_RELEASE}                 && cd alpine                 && make module-geoip module-image-filter module-njs module-xslt                 && apk index -o ${tempDir}/packages/alpine/${apkArch}/APKINDEX.tar.gz ${tempDir}/packages/alpine/${apkArch}/*.apk                 && abuild-sign -k ${tempDir}/.abuild/abuild-key.rsa ${tempDir}/packages/alpine/${apkArch}/APKINDEX.tar.gz                 \"             && cp ${tempDir}/.abuild/abuild-key.rsa.pub /etc/apk/keys/             && apk del .build-deps             && apk add -X ${tempDir}/packages/alpine/ --no-cache $nginxPackages             ;;     esac     && apk del .checksum-deps     && if [ -n \"$tempDir\" ]; then rm -rf \"$tempDir\"; fi     && if [ -n \"/etc/apk/keys/abuild-key.rsa.pub\" ]; then rm -f /etc/apk/keys/abuild-key.rsa.pub; fi     && if [ -n \"/etc/apk/keys/nginx_signing.rsa.pub\" ]; then rm -f /etc/apk/keys/nginx_signing.rsa.pub; fi     && apk add --no-cache curl ca-certificates"]
+	"cust-6ddee9c30869b865b7b91b804599ebc7" -> "cust-434f429de2042d15fcb42244260d3d63"
+	"cust-947aa687335bd8a2ee9bf6f19948f530" -> "cust-6ddee9c30869b865b7b91b804599ebc7"
+	"cust-060fd9fe5b059ede8790cf5ca2d608aa" -> "cust-947aa687335bd8a2ee9bf6f19948f530"
+	"cust-bb456e0630257e9555cd3de946d64a5a" -> "cust-060fd9fe5b059ede8790cf5ca2d608aa"
+	"cust-4a52a2d38d16761c74294181dad27c90" -> "cust-bb456e0630257e9555cd3de946d64a5a"
+	"cust-3967147140324318cd9d6589621d7c5d" -> "cust-4a52a2d38d16761c74294181dad27c90"
+	"cust-c062cb4da407b226ac5af15c26df8263" -> "cust-3967147140324318cd9d6589621d7c5d"
+	"cust-ad781dd61ef1160eb04157c267451ae2" -> "cust-c062cb4da407b226ac5af15c26df8263"
+	"cust-6e2036255fbd72d3f4d63c606510b9e4" -> "cust-ad781dd61ef1160eb04157c267451ae2"
+	"cust-4bea7ce4cb1a9157b4fcc7744efb98e7" -> "cust-6e2036255fbd72d3f4d63c606510b9e4"
+	"cust-1729898adce78d6f96e0551e1dd0d2d9" -> "cust-4bea7ce4cb1a9157b4fcc7744efb98e7"
+	"cust-ac44119fedb98df68ef4e47fe0cf143f" -> "cust-1729898adce78d6f96e0551e1dd0d2d9"
+	"cust-5d002a41f843ce0e809ac7bed7cf68dd" -> "cust-ac44119fedb98df68ef4e47fe0cf143f"
+	"cust-8084460852dc537fba202662fc717296" -> "cust-5d002a41f843ce0e809ac7bed7cf68dd"
+	"cust-4043593ed2263037a1f88f2cf9c49075" -> "cust-8084460852dc537fba202662fc717296"
+	"cust-fbdf721120a135ba6770a28ec864852c" [label="subtotal ratio: 0.17049258724993413
+layer size: 6.73mb
+subtotal size: 39.48mb
+running total: 6.73mb
+/bin/sh -c #(nop) ADD file:6dd87346b8be2" fillcolor="yellow;0.1705:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop) ADD file:6dd87346b8be240b21b4f4d9296253bf0d28b6579aa52d2118872e3936963b6b in / "]
+	"cust-d1551fa6e59259ed9e0cb10083180009" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 39.48mb
+running total: 6.73mb
+/bin/sh -c #(nop)  CMD [\"/bin/sh\"]" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop)  CMD [\"/bin/sh\"]"]
+	"cust-dc9861d0ba8e07f96f5d0516c47b96aa" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 39.48mb
+running total: 6.73mb
+/bin/sh -c #(nop)  LABEL maintainer=NGIN" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop)  LABEL maintainer=NGINX Docker Maintainers <docker-maint@nginx.com>"]
+	"cust-aca3d2398af4388a2730474bbd3a0068" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 39.48mb
+running total: 6.73mb
+/bin/sh -c #(nop)  ENV NGINX_VERSION=1.2" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop)  ENV NGINX_VERSION=1.25.1"]
+	"cust-6043d51d4990dfdf0eb0ab0dcf1360a4" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 39.48mb
+running total: 6.73mb
+/bin/sh -c #(nop)  ENV PKG_RELEASE=1" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop)  ENV PKG_RELEASE=1"]
+	"cust-44c5f9d57fe2b389e0f208068432019b" [label="subtotal ratio: 0.11438350305947155
+layer size: 4.52mb
+subtotal size: 39.48mb
+running total: 11.25mb
+/bin/sh -c set -x     && addgroup -g 101" fillcolor="yellow;0.1144:transparent" shape=box style=filled tooltip="/bin/sh -c set -x     && addgroup -g 101 -S nginx     && adduser -S -D -H -u 101 -h /var/cache/nginx -s /sbin/nologin -G nginx -g nginx nginx     && apkArch=\"$(cat /etc/apk/arch)\"     && nginxPackages=\"         nginx=${NGINX_VERSION}-r${PKG_RELEASE}     \"     && apk add --no-cache --virtual .checksum-deps         openssl     && case \"$apkArch\" in         x86_64|aarch64)             set -x             && KEY_SHA512=\"e09fa32f0a0eab2b879ccbbc4d0e4fb9751486eedda75e35fac65802cc9faa266425edf83e261137a2f4d16281ce2c1a5f4502930fe75154723da014214f0655\"             && wget -O /tmp/nginx_signing.rsa.pub https://nginx.org/keys/nginx_signing.rsa.pub             && if echo \"$KEY_SHA512 */tmp/nginx_signing.rsa.pub\" | sha512sum -c -; then                 echo \"key verification succeeded!\";                 mv /tmp/nginx_signing.rsa.pub /etc/apk/keys/;             else                 echo \"key verification failed!\";                 exit 1;             fi             && apk add -X \"https://nginx.org/packages/mainline/alpine/v$(egrep -o '^[0-9]+\.[0-9]+' /etc/alpine-release)/main\" --no-cache $nginxPackages             ;;         *)             set -x             && tempDir=\"$(mktemp -d)\"             && chown nobody:nobody $tempDir             && apk add --no-cache --virtual .build-deps                 gcc                 libc-dev                 make                 openssl-dev                 pcre2-dev                 zlib-dev                 linux-headers                 bash                 alpine-sdk                 findutils             && su nobody -s /bin/sh -c \"                 export HOME=${tempDir}                 && cd ${tempDir}                 && curl -f -O https://hg.nginx.org/pkg-oss/archive/${NGINX_VERSION}-${PKG_RELEASE}.tar.gz                 && PKGOSSCHECKSUM=\"dd08a5c2b441817d58ffc91ade0d927a21bc9854c768391e92a005997a2961bcda64ca6a5cfce98d5394ac2787c8f4839b150f206835a8a7db944625651f9fd8 *${NGINX_VERSION}-${PKG_RELEASE}.tar.gz\"                 && if [ \"\$(openssl sha512 -r ${NGINX_VERSION}-${PKG_RELEASE}.tar.gz)\" = \"\$PKGOSSCHECKSUM\" ]; then                     echo \"pkg-oss tarball checksum verification succeeded!\";                 else                     echo \"pkg-oss tarball checksum verification failed!\";                     exit 1;                 fi                 && tar xzvf ${NGINX_VERSION}-${PKG_RELEASE}.tar.gz                 && cd pkg-oss-${NGINX_VERSION}-${PKG_RELEASE}                 && cd alpine                 && make base                 && apk index -o ${tempDir}/packages/alpine/${apkArch}/APKINDEX.tar.gz ${tempDir}/packages/alpine/${apkArch}/*.apk                 && abuild-sign -k ${tempDir}/.abuild/abuild-key.rsa ${tempDir}/packages/alpine/${apkArch}/APKINDEX.tar.gz                 \"             && cp ${tempDir}/.abuild/abuild-key.rsa.pub /etc/apk/keys/             && apk del --no-network .build-deps             && apk add -X ${tempDir}/packages/alpine/ --no-cache $nginxPackages             ;;     esac     && apk del --no-network .checksum-deps     && if [ -n \"$tempDir\" ]; then rm -rf \"$tempDir\"; fi     && if [ -n \"/etc/apk/keys/abuild-key.rsa.pub\" ]; then rm -f /etc/apk/keys/abuild-key.rsa.pub; fi     && if [ -n \"/etc/apk/keys/nginx_signing.rsa.pub\" ]; then rm -f /etc/apk/keys/nginx_signing.rsa.pub; fi     && apk add --no-cache --virtual .gettext gettext     && mv /usr/bin/envsubst /tmp/         && runDeps=\"$(         scanelf --needed --nobanner /tmp/envsubst             | awk '{ gsub(/,/, \"\nso:\", $2); print \"so:\" $2 }'             | sort -u             | xargs -r apk info --installed             | sort -u     )\"     && apk add --no-cache $runDeps     && apk del --no-network .gettext     && mv /tmp/envsubst /usr/local/bin/     && apk add --no-cache tzdata     && ln -sf /dev/stdout /var/log/nginx/access.log     && ln -sf /dev/stderr /var/log/nginx/error.log     && mkdir /docker-entrypoint.d"]
+	"cust-775359ad91e68a2aac0fd03231cb79f9" [label="subtotal ratio: 3.903462446070442e-05
+layer size: 1.58kb
+subtotal size: 39.48mb
+running total: 11.25mb
+/bin/sh -c #(nop) COPY file:7b307b62e822" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop) COPY file:7b307b62e82255f040c9812421a30090bf9abf3685f27b02d77fcca99f997911 in / "]
+	"cust-f71da73ee0c109eb40e6ff87be23fa05" [label="subtotal ratio: 5.128125478346255e-05
+layer size: 2.07kb
+subtotal size: 39.48mb
+running total: 11.25mb
+/bin/sh -c #(nop) COPY file:5c1827273434" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop) COPY file:5c18272734349488bd0c94ec8d382c872c1a0a435cca13bd4671353d6021d2cb in /docker-entrypoint.d "]
+	"cust-2c62469d0386c138f7f82ea967e00b73" [label="subtotal ratio: 6.666804672744071e-06
+layer size: 0.27kb
+subtotal size: 39.48mb
+running total: 11.25mb
+/bin/sh -c #(nop) COPY file:d4375883ed5d" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop) COPY file:d4375883ed5db364232ccf781e8ad28514cd005edb385d43dbfb984f2c63edb9 in /docker-entrypoint.d "]
+	"cust-8c2c85f3cfcfce92c1f2de4238d61b17" [label="subtotal ratio: 7.265850889715278e-05
+layer size: 2.94kb
+subtotal size: 39.48mb
+running total: 11.25mb
+/bin/sh -c #(nop) COPY file:36429cfeeb29" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop) COPY file:36429cfeeb299f9913b84ea136b004be12fbe4bb4f975a977a3608044e8bfa91 in /docker-entrypoint.d "]
+	"cust-98489ef443f90e2de7d4143f8e7886b1" [label="subtotal ratio: 0.0001116206680896752
+layer size: 4.51kb
+subtotal size: 39.48mb
+running total: 11.26mb
+/bin/sh -c #(nop) COPY file:e57eef017a41" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop) COPY file:e57eef017a414ca793499729d80a7b9075790c9a804f930f1417e56d506970cf in /docker-entrypoint.d "]
+	"cust-2f3d371bac1fbb64658458ce29c1c046" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 39.48mb
+running total: 11.26mb
+/bin/sh -c #(nop)  ENTRYPOINT [\"/docker-" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop)  ENTRYPOINT [\"/docker-entrypoint.sh\"]"]
+	"cust-a4a981bb42e879148847a43f8b3aa269" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 39.48mb
+running total: 11.26mb
+/bin/sh -c #(nop)  EXPOSE 80" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop)  EXPOSE 80"]
+	"cust-a3cffa1d479737e0331db1ddd510ca39" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 39.48mb
+running total: 11.26mb
+/bin/sh -c #(nop)  STOPSIGNAL SIGQUIT" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop)  STOPSIGNAL SIGQUIT"]
+	"cust-7aaeaaa24174780e7cd5b77900c677bf" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 39.48mb
+running total: 11.26mb
+/bin/sh -c #(nop)  CMD [\"nginx\" \"-g\" \"da" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop)  CMD [\"nginx\" \"-g\" \"daemon off;\"]"]
+	"cust-a7f56ec51d59e48d0a2eb037c953f1df" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 39.48mb
+running total: 11.26mb
+/bin/sh -c #(nop)  ENV NJS_VERSION=0.7.1" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop)  ENV NJS_VERSION=0.7.12"]
+	"cust-ceb561fbc927dd6588c3318d519a3cee" [label="subtotal ratio: 0.7148426478296905
+layer size: 28.22mb
+subtotal size: 39.48mb
+running total: 39.48mb
+tags: 1.25.1-alpine
+/bin/sh -c set -x     && apkArch=\"$(cat " fillcolor="yellow;0.7148:transparent" shape=pentagon style=filled tooltip="/bin/sh -c set -x     && apkArch=\"$(cat /etc/apk/arch)\"     && nginxPackages=\"         nginx=${NGINX_VERSION}-r${PKG_RELEASE}         nginx-module-xslt=${NGINX_VERSION}-r${PKG_RELEASE}         nginx-module-geoip=${NGINX_VERSION}-r${PKG_RELEASE}         nginx-module-image-filter=${NGINX_VERSION}-r${PKG_RELEASE}         nginx-module-njs=${NGINX_VERSION}.${NJS_VERSION}-r${PKG_RELEASE}     \"     && apk add --no-cache --virtual .checksum-deps         openssl     && case \"$apkArch\" in         x86_64|aarch64)             set -x             && KEY_SHA512=\"e09fa32f0a0eab2b879ccbbc4d0e4fb9751486eedda75e35fac65802cc9faa266425edf83e261137a2f4d16281ce2c1a5f4502930fe75154723da014214f0655\"             && wget -O /tmp/nginx_signing.rsa.pub https://nginx.org/keys/nginx_signing.rsa.pub             && if echo \"$KEY_SHA512 */tmp/nginx_signing.rsa.pub\" | sha512sum -c -; then                 echo \"key verification succeeded!\";                 mv /tmp/nginx_signing.rsa.pub /etc/apk/keys/;             else                 echo \"key verification failed!\";                 exit 1;             fi             && apk add -X \"https://nginx.org/packages/mainline/alpine/v$(egrep -o '^[0-9]+\.[0-9]+' /etc/alpine-release)/main\" --no-cache $nginxPackages             ;;         *)             set -x             && tempDir=\"$(mktemp -d)\"             && chown nobody:nobody $tempDir             && apk add --no-cache --virtual .build-deps                 gcc                 libc-dev                 make                 openssl-dev                 pcre2-dev                 zlib-dev                 linux-headers                 libxslt-dev                 gd-dev                 geoip-dev                 libedit-dev                 bash                 alpine-sdk                 findutils             && su nobody -s /bin/sh -c \"                 export HOME=${tempDir}                 && cd ${tempDir}                 && curl -f -O https://hg.nginx.org/pkg-oss/archive/${NGINX_VERSION}-${PKG_RELEASE}.tar.gz                 && PKGOSSCHECKSUM=\"dd08a5c2b441817d58ffc91ade0d927a21bc9854c768391e92a005997a2961bcda64ca6a5cfce98d5394ac2787c8f4839b150f206835a8a7db944625651f9fd8 *${NGINX_VERSION}-${PKG_RELEASE}.tar.gz\"                 && if [ \"\$(openssl sha512 -r ${NGINX_VERSION}-${PKG_RELEASE}.tar.gz)\" = \"\$PKGOSSCHECKSUM\" ]; then                     echo \"pkg-oss tarball checksum verification succeeded!\";                 else                     echo \"pkg-oss tarball checksum verification failed!\";                     exit 1;                 fi                 && tar xzvf ${NGINX_VERSION}-${PKG_RELEASE}.tar.gz                 && cd pkg-oss-${NGINX_VERSION}-${PKG_RELEASE}                 && cd alpine                 && make module-geoip module-image-filter module-njs module-xslt                 && apk index -o ${tempDir}/packages/alpine/${apkArch}/APKINDEX.tar.gz ${tempDir}/packages/alpine/${apkArch}/*.apk                 && abuild-sign -k ${tempDir}/.abuild/abuild-key.rsa ${tempDir}/packages/alpine/${apkArch}/APKINDEX.tar.gz                 \"             && cp ${tempDir}/.abuild/abuild-key.rsa.pub /etc/apk/keys/             && apk del --no-network .build-deps             && apk add -X ${tempDir}/packages/alpine/ --no-cache $nginxPackages             ;;     esac     && apk del --no-network .checksum-deps     && if [ -n \"$tempDir\" ]; then rm -rf \"$tempDir\"; fi     && if [ -n \"/etc/apk/keys/abuild-key.rsa.pub\" ]; then rm -f /etc/apk/keys/abuild-key.rsa.pub; fi     && if [ -n \"/etc/apk/keys/nginx_signing.rsa.pub\" ]; then rm -f /etc/apk/keys/nginx_signing.rsa.pub; fi     && apk add --no-cache curl ca-certificates"]
+	"cust-a7f56ec51d59e48d0a2eb037c953f1df" -> "cust-ceb561fbc927dd6588c3318d519a3cee"
+	"cust-7aaeaaa24174780e7cd5b77900c677bf" -> "cust-a7f56ec51d59e48d0a2eb037c953f1df"
+	"cust-a3cffa1d479737e0331db1ddd510ca39" -> "cust-7aaeaaa24174780e7cd5b77900c677bf"
+	"cust-a4a981bb42e879148847a43f8b3aa269" -> "cust-a3cffa1d479737e0331db1ddd510ca39"
+	"cust-2f3d371bac1fbb64658458ce29c1c046" -> "cust-a4a981bb42e879148847a43f8b3aa269"
+	"cust-98489ef443f90e2de7d4143f8e7886b1" -> "cust-2f3d371bac1fbb64658458ce29c1c046"
+	"cust-8c2c85f3cfcfce92c1f2de4238d61b17" -> "cust-98489ef443f90e2de7d4143f8e7886b1"
+	"cust-2c62469d0386c138f7f82ea967e00b73" -> "cust-8c2c85f3cfcfce92c1f2de4238d61b17"
+	"cust-f71da73ee0c109eb40e6ff87be23fa05" -> "cust-2c62469d0386c138f7f82ea967e00b73"
+	"cust-775359ad91e68a2aac0fd03231cb79f9" -> "cust-f71da73ee0c109eb40e6ff87be23fa05"
+	"cust-44c5f9d57fe2b389e0f208068432019b" -> "cust-775359ad91e68a2aac0fd03231cb79f9"
+	"cust-6043d51d4990dfdf0eb0ab0dcf1360a4" -> "cust-44c5f9d57fe2b389e0f208068432019b"
+	"cust-aca3d2398af4388a2730474bbd3a0068" -> "cust-6043d51d4990dfdf0eb0ab0dcf1360a4"
+	"cust-dc9861d0ba8e07f96f5d0516c47b96aa" -> "cust-aca3d2398af4388a2730474bbd3a0068"
+	"cust-d1551fa6e59259ed9e0cb10083180009" -> "cust-dc9861d0ba8e07f96f5d0516c47b96aa"
+	"cust-fbdf721120a135ba6770a28ec864852c" -> "cust-d1551fa6e59259ed9e0cb10083180009"
+	"cust-88f943ebedb51761827704a9c9b18233" [label="subtotal ratio: 0.17217823346691918
+layer size: 7.0mb
+subtotal size: 40.63mb
+running total: 7.0mb
+/bin/sh -c #(nop) ADD file:756183bba9c7f" fillcolor="yellow;0.1722:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop) ADD file:756183bba9c7f4593c2b216e98e4208b9163c4c962ea0837ef88bd917609d001 in / "]
+	"cust-17551602a54d88b66430effd1affee02" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 40.63mb
+running total: 7.0mb
+/bin/sh -c #(nop)  CMD [\"/bin/sh\"]" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop)  CMD [\"/bin/sh\"]"]
+	"cust-075343778145f2c29e260006b732d329" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 40.63mb
+running total: 7.0mb
+/bin/sh -c #(nop)  LABEL maintainer=NGIN" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop)  LABEL maintainer=NGINX Docker Maintainers <docker-maint@nginx.com>"]
+	"cust-bdf5f3ea3b5b5cd33f6843c5456a27af" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 40.63mb
+running total: 7.0mb
+/bin/sh -c #(nop)  ENV NGINX_VERSION=1.2" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop)  ENV NGINX_VERSION=1.25.2"]
+	"cust-a25a9ab467ef1f7e43d5298e113ea394" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 40.63mb
+running total: 7.0mb
+/bin/sh -c #(nop)  ENV PKG_RELEASE=1" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop)  ENV PKG_RELEASE=1"]
+	"cust-3925bd5114abb4351748ac4770914bc7" [label="subtotal ratio: 0.10693201505084862
+layer size: 4.34mb
+subtotal size: 40.63mb
+running total: 11.34mb
+/bin/sh -c set -x     && addgroup -g 101" fillcolor="yellow;0.1069:transparent" shape=box style=filled tooltip="/bin/sh -c set -x     && addgroup -g 101 -S nginx     && adduser -S -D -H -u 101 -h /var/cache/nginx -s /sbin/nologin -G nginx -g nginx nginx     && apkArch=\"$(cat /etc/apk/arch)\"     && nginxPackages=\"         nginx=${NGINX_VERSION}-r${PKG_RELEASE}     \"     && apk add --no-cache --virtual .checksum-deps         openssl     && case \"$apkArch\" in         x86_64|aarch64)             set -x             && KEY_SHA512=\"e09fa32f0a0eab2b879ccbbc4d0e4fb9751486eedda75e35fac65802cc9faa266425edf83e261137a2f4d16281ce2c1a5f4502930fe75154723da014214f0655\"             && wget -O /tmp/nginx_signing.rsa.pub https://nginx.org/keys/nginx_signing.rsa.pub             && if echo \"$KEY_SHA512 */tmp/nginx_signing.rsa.pub\" | sha512sum -c -; then                 echo \"key verification succeeded!\";                 mv /tmp/nginx_signing.rsa.pub /etc/apk/keys/;             else                 echo \"key verification failed!\";                 exit 1;             fi             && apk add -X \"https://nginx.org/packages/mainline/alpine/v$(egrep -o '^[0-9]+\.[0-9]+' /etc/alpine-release)/main\" --no-cache $nginxPackages             ;;         *)             set -x             && tempDir=\"$(mktemp -d)\"             && chown nobody:nobody $tempDir             && apk add --no-cache --virtual .build-deps                 gcc                 libc-dev                 make                 openssl-dev                 pcre2-dev                 zlib-dev                 linux-headers                 bash                 alpine-sdk                 findutils             && su nobody -s /bin/sh -c \"                 export HOME=${tempDir}                 && cd ${tempDir}                 && curl -f -O https://hg.nginx.org/pkg-oss/archive/${NGINX_VERSION}-${PKG_RELEASE}.tar.gz                 && PKGOSSCHECKSUM=\"64d3f504b246df1997d8442b12303944d2f51e09b35443b23da479af7790b9f84cf2ddf8ba108bdd712f92466f9a8e107b865a488f0898b87d39059f9f7ff56c *${NGINX_VERSION}-${PKG_RELEASE}.tar.gz\"                 && if [ \"\$(openssl sha512 -r ${NGINX_VERSION}-${PKG_RELEASE}.tar.gz)\" = \"\$PKGOSSCHECKSUM\" ]; then                     echo \"pkg-oss tarball checksum verification succeeded!\";                 else                     echo \"pkg-oss tarball checksum verification failed!\";                     exit 1;                 fi                 && tar xzvf ${NGINX_VERSION}-${PKG_RELEASE}.tar.gz                 && cd pkg-oss-${NGINX_VERSION}-${PKG_RELEASE}                 && cd alpine                 && make base                 && apk index -o ${tempDir}/packages/alpine/${apkArch}/APKINDEX.tar.gz ${tempDir}/packages/alpine/${apkArch}/*.apk                 && abuild-sign -k ${tempDir}/.abuild/abuild-key.rsa ${tempDir}/packages/alpine/${apkArch}/APKINDEX.tar.gz                 \"             && cp ${tempDir}/.abuild/abuild-key.rsa.pub /etc/apk/keys/             && apk del --no-network .build-deps             && apk add -X ${tempDir}/packages/alpine/ --no-cache $nginxPackages             ;;     esac     && apk del --no-network .checksum-deps     && if [ -n \"$tempDir\" ]; then rm -rf \"$tempDir\"; fi     && if [ -f \"/etc/apk/keys/abuild-key.rsa.pub\" ]; then rm -f /etc/apk/keys/abuild-key.rsa.pub; fi     && if [ -f \"/etc/apk/keys/nginx_signing.rsa.pub\" ]; then rm -f /etc/apk/keys/nginx_signing.rsa.pub; fi     && apk add --no-cache --virtual .gettext gettext     && mv /usr/bin/envsubst /tmp/         && runDeps=\"$(         scanelf --needed --nobanner /tmp/envsubst             | awk '{ gsub(/,/, \"\nso:\", $2); print \"so:\" $2 }'             | sort -u             | xargs -r apk info --installed             | sort -u     )\"     && apk add --no-cache $runDeps     && apk del --no-network .gettext     && mv /tmp/envsubst /usr/local/bin/     && apk add --no-cache tzdata     && ln -sf /dev/stdout /var/log/nginx/access.log     && ln -sf /dev/stderr /var/log/nginx/error.log     && mkdir /docker-entrypoint.d"]
+	"cust-4358e162ef63f150b3c128a9bf5243ff" [label="subtotal ratio: 3.8025212687689634e-05
+layer size: 1.58kb
+subtotal size: 40.63mb
+running total: 11.34mb
+/bin/sh -c #(nop) COPY file:01e75c6dd0ce" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop) COPY file:01e75c6dd0ce317d516928a17584d111cd082840c01e58be0afc851b33adb916 in / "]
+	"cust-3464f78cade8ce55e25ec487ba060f23" [label="subtotal ratio: 4.987875121070399e-05
+layer size: 2.08kb
+subtotal size: 40.63mb
+running total: 11.34mb
+/bin/sh -c #(nop) COPY file:caec368f5a54" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop) COPY file:caec368f5a54f70a844a13005eb2255bed778809b3672d516e719ce2f4bce123 in /docker-entrypoint.d "]
+	"cust-baab3dfc42a50594dda639c7cbb1bc10" [label="subtotal ratio: 6.994761346254019e-06
+layer size: 0.29kb
+subtotal size: 40.63mb
+running total: 11.34mb
+/bin/sh -c #(nop) COPY file:3b1b9915b7dd" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop) COPY file:3b1b9915b7dd898a0e32f7eb9715a35c9feab914022efff68ba990bc1ec7d169 in /docker-entrypoint.d "]
+	"cust-ac6829388ecad1895af28b0115789ac0" [label="subtotal ratio: 7.083956289595513e-05
+layer size: 2.95kb
+subtotal size: 40.63mb
+running total: 11.35mb
+/bin/sh -c #(nop) COPY file:57846632accc" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop) COPY file:57846632accc89753f45cbc00cb9e6223d991e1d31297eec3395a7ca58eed6a6 in /docker-entrypoint.d "]
+	"cust-e7cc7207b641b267899949b9f349e739" [label="subtotal ratio: 0.00010841880086693729
+layer size: 4.51kb
+subtotal size: 40.63mb
+running total: 11.35mb
+/bin/sh -c #(nop) COPY file:9e3b2b63db9f" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop) COPY file:9e3b2b63db9f8fc702e2dc2bdd0943be0d990c028cddcf1c159f5556a8ba3030 in /docker-entrypoint.d "]
+	"cust-f5aa64917de95ebafa70475b20c43fa7" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 40.63mb
+running total: 11.35mb
+/bin/sh -c #(nop)  ENTRYPOINT [\"/docker-" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop)  ENTRYPOINT [\"/docker-entrypoint.sh\"]"]
+	"cust-0f30e91f7684cb830803672a1cda45e4" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 40.63mb
+running total: 11.35mb
+/bin/sh -c #(nop)  EXPOSE 80" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop)  EXPOSE 80"]
+	"cust-a0890146f54503884f4f246092b7849b" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 40.63mb
+running total: 11.35mb
+/bin/sh -c #(nop)  STOPSIGNAL SIGQUIT" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop)  STOPSIGNAL SIGQUIT"]
+	"cust-eae14e4cc003b6ac835da8d785fc45f1" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 40.63mb
+running total: 11.35mb
+/bin/sh -c #(nop)  CMD [\"nginx\" \"-g\" \"da" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop)  CMD [\"nginx\" \"-g\" \"daemon off;\"]"]
+	"cust-0eef84c69a601170c40396da445419e4" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 40.63mb
+running total: 11.35mb
+/bin/sh -c #(nop)  ENV NJS_VERSION=0.8.0" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop)  ENV NJS_VERSION=0.8.0"]
+	"cust-34053d576452e75533a3a75ededd3843" [label="subtotal ratio: 0.7206155943932246
+layer size: 29.28mb
+subtotal size: 40.63mb
+running total: 40.63mb
+tags: 1.25.2-alpine
+/bin/sh -c set -x     && apkArch=\"$(cat " fillcolor="yellow;0.7206:transparent" shape=pentagon style=filled tooltip="/bin/sh -c set -x     && apkArch=\"$(cat /etc/apk/arch)\"     && nginxPackages=\"         nginx=${NGINX_VERSION}-r${PKG_RELEASE}         nginx-module-xslt=${NGINX_VERSION}-r${PKG_RELEASE}         nginx-module-geoip=${NGINX_VERSION}-r${PKG_RELEASE}         nginx-module-image-filter=${NGINX_VERSION}-r${PKG_RELEASE}         nginx-module-njs=${NGINX_VERSION}.${NJS_VERSION}-r${PKG_RELEASE}     \"     && apk add --no-cache --virtual .checksum-deps         openssl     && case \"$apkArch\" in         x86_64|aarch64)             set -x             && KEY_SHA512=\"e09fa32f0a0eab2b879ccbbc4d0e4fb9751486eedda75e35fac65802cc9faa266425edf83e261137a2f4d16281ce2c1a5f4502930fe75154723da014214f0655\"             && wget -O /tmp/nginx_signing.rsa.pub https://nginx.org/keys/nginx_signing.rsa.pub             && if echo \"$KEY_SHA512 */tmp/nginx_signing.rsa.pub\" | sha512sum -c -; then                 echo \"key verification succeeded!\";                 mv /tmp/nginx_signing.rsa.pub /etc/apk/keys/;             else                 echo \"key verification failed!\";                 exit 1;             fi             && apk add -X \"https://nginx.org/packages/mainline/alpine/v$(egrep -o '^[0-9]+\.[0-9]+' /etc/alpine-release)/main\" --no-cache $nginxPackages             ;;         *)             set -x             && tempDir=\"$(mktemp -d)\"             && chown nobody:nobody $tempDir             && apk add --no-cache --virtual .build-deps                 gcc                 libc-dev                 make                 openssl-dev                 pcre2-dev                 zlib-dev                 linux-headers                 libxslt-dev                 gd-dev                 geoip-dev                 libedit-dev                 bash                 alpine-sdk                 findutils             && su nobody -s /bin/sh -c \"                 export HOME=${tempDir}                 && cd ${tempDir}                 && curl -f -O https://hg.nginx.org/pkg-oss/archive/${NGINX_VERSION}-${PKG_RELEASE}.tar.gz                 && PKGOSSCHECKSUM=\"64d3f504b246df1997d8442b12303944d2f51e09b35443b23da479af7790b9f84cf2ddf8ba108bdd712f92466f9a8e107b865a488f0898b87d39059f9f7ff56c *${NGINX_VERSION}-${PKG_RELEASE}.tar.gz\"                 && if [ \"\$(openssl sha512 -r ${NGINX_VERSION}-${PKG_RELEASE}.tar.gz)\" = \"\$PKGOSSCHECKSUM\" ]; then                     echo \"pkg-oss tarball checksum verification succeeded!\";                 else                     echo \"pkg-oss tarball checksum verification failed!\";                     exit 1;                 fi                 && tar xzvf ${NGINX_VERSION}-${PKG_RELEASE}.tar.gz                 && cd pkg-oss-${NGINX_VERSION}-${PKG_RELEASE}                 && cd alpine                 && make module-geoip module-image-filter module-njs module-xslt                 && apk index -o ${tempDir}/packages/alpine/${apkArch}/APKINDEX.tar.gz ${tempDir}/packages/alpine/${apkArch}/*.apk                 && abuild-sign -k ${tempDir}/.abuild/abuild-key.rsa ${tempDir}/packages/alpine/${apkArch}/APKINDEX.tar.gz                 \"             && cp ${tempDir}/.abuild/abuild-key.rsa.pub /etc/apk/keys/             && apk del --no-network .build-deps             && apk add -X ${tempDir}/packages/alpine/ --no-cache $nginxPackages             ;;     esac     && apk del --no-network .checksum-deps     && if [ -n \"$tempDir\" ]; then rm -rf \"$tempDir\"; fi     && if [ -f \"/etc/apk/keys/abuild-key.rsa.pub\" ]; then rm -f /etc/apk/keys/abuild-key.rsa.pub; fi     && if [ -f \"/etc/apk/keys/nginx_signing.rsa.pub\" ]; then rm -f /etc/apk/keys/nginx_signing.rsa.pub; fi     && apk add --no-cache curl ca-certificates"]
+	"cust-0eef84c69a601170c40396da445419e4" -> "cust-34053d576452e75533a3a75ededd3843"
+	"cust-eae14e4cc003b6ac835da8d785fc45f1" -> "cust-0eef84c69a601170c40396da445419e4"
+	"cust-a0890146f54503884f4f246092b7849b" -> "cust-eae14e4cc003b6ac835da8d785fc45f1"
+	"cust-0f30e91f7684cb830803672a1cda45e4" -> "cust-a0890146f54503884f4f246092b7849b"
+	"cust-f5aa64917de95ebafa70475b20c43fa7" -> "cust-0f30e91f7684cb830803672a1cda45e4"
+	"cust-e7cc7207b641b267899949b9f349e739" -> "cust-f5aa64917de95ebafa70475b20c43fa7"
+	"cust-ac6829388ecad1895af28b0115789ac0" -> "cust-e7cc7207b641b267899949b9f349e739"
+	"cust-baab3dfc42a50594dda639c7cbb1bc10" -> "cust-ac6829388ecad1895af28b0115789ac0"
+	"cust-3464f78cade8ce55e25ec487ba060f23" -> "cust-baab3dfc42a50594dda639c7cbb1bc10"
+	"cust-4358e162ef63f150b3c128a9bf5243ff" -> "cust-3464f78cade8ce55e25ec487ba060f23"
+	"cust-3925bd5114abb4351748ac4770914bc7" -> "cust-4358e162ef63f150b3c128a9bf5243ff"
+	"cust-a25a9ab467ef1f7e43d5298e113ea394" -> "cust-3925bd5114abb4351748ac4770914bc7"
+	"cust-bdf5f3ea3b5b5cd33f6843c5456a27af" -> "cust-a25a9ab467ef1f7e43d5298e113ea394"
+	"cust-075343778145f2c29e260006b732d329" -> "cust-bdf5f3ea3b5b5cd33f6843c5456a27af"
+	"cust-17551602a54d88b66430effd1affee02" -> "cust-075343778145f2c29e260006b732d329"
+	"cust-88f943ebedb51761827704a9c9b18233" -> "cust-17551602a54d88b66430effd1affee02"
+	"cust-08ccc6dfb2fc1b3e8df41c861b30b133" [label="subtotal ratio: 0.17233092145397064
+layer size: 7.0mb
+subtotal size: 40.62mb
+running total: 7.0mb
+/bin/sh -c #(nop) ADD file:fc714080c3bcb" fillcolor="yellow;0.1723:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop) ADD file:fc714080c3bcbbce7ac746a10d7b4355ffa36293a8d435d62cd5359ea8eb8364 in / "]
+	"cust-8135b839e617c0821dbd21c91d17b830" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 40.62mb
+running total: 7.0mb
+/bin/sh -c #(nop)  CMD [\"/bin/sh\"]" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="/bin/sh -c #(nop)  CMD [\"/bin/sh\"]"]
+	"cust-3d3c1d90e62bab04fc4f8e7cd63009d8" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 40.62mb
+running total: 7.0mb
+LABEL maintainer=NGINX Docker Maintainer" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="LABEL maintainer=NGINX Docker Maintainers <docker-maint@nginx.com>"]
+	"cust-6bc71f83c83000fd65bf75b1ff5a93e2" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 40.62mb
+running total: 7.0mb
+ENV NGINX_VERSION=1.25.3" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="ENV NGINX_VERSION=1.25.3"]
+	"cust-3411dc178aaaf6e9f947d367117b99c0" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 40.62mb
+running total: 7.0mb
+ENV PKG_RELEASE=1" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="ENV PKG_RELEASE=1"]
+	"cust-efca7a672d04f01a7ba0aac9692f95c3" [label="subtotal ratio: 0.10706328741988047
+layer size: 4.35mb
+subtotal size: 40.62mb
+running total: 11.35mb
+RUN /bin/sh -c set -x     && addgroup -g" fillcolor="yellow;0.1071:transparent" shape=box style=filled tooltip="RUN /bin/sh -c set -x     && addgroup -g 101 -S nginx     && adduser -S -D -H -u 101 -h /var/cache/nginx -s /sbin/nologin -G nginx -g nginx nginx     && apkArch=\"$(cat /etc/apk/arch)\"     && nginxPackages=\"         nginx=${NGINX_VERSION}-r${PKG_RELEASE}     \"     && apk add --no-cache --virtual .checksum-deps         openssl     && case \"$apkArch\" in         x86_64|aarch64)             set -x             && KEY_SHA512=\"e09fa32f0a0eab2b879ccbbc4d0e4fb9751486eedda75e35fac65802cc9faa266425edf83e261137a2f4d16281ce2c1a5f4502930fe75154723da014214f0655\"             && wget -O /tmp/nginx_signing.rsa.pub https://nginx.org/keys/nginx_signing.rsa.pub             && if echo \"$KEY_SHA512 */tmp/nginx_signing.rsa.pub\" | sha512sum -c -; then                 echo \"key verification succeeded!\";                 mv /tmp/nginx_signing.rsa.pub /etc/apk/keys/;             else                 echo \"key verification failed!\";                 exit 1;             fi             && apk add -X \"https://nginx.org/packages/mainline/alpine/v$(egrep -o '^[0-9]+\.[0-9]+' /etc/alpine-release)/main\" --no-cache $nginxPackages             ;;         *)             set -x             && tempDir=\"$(mktemp -d)\"             && chown nobody:nobody $tempDir             && apk add --no-cache --virtual .build-deps                 gcc                 libc-dev                 make                 openssl-dev                 pcre2-dev                 zlib-dev                 linux-headers                 bash                 alpine-sdk                 findutils             && su nobody -s /bin/sh -c \"                 export HOME=${tempDir}                 && cd ${tempDir}                 && curl -f -O https://hg.nginx.org/pkg-oss/archive/${NGINX_VERSION}-${PKG_RELEASE}.tar.gz                 && PKGOSSCHECKSUM=\"00b217979265cc9d66c991c9c89427558936dbaa568d175ca45780589171d94f1866217be09a83438d95494cf38baaa6788320f6d8d23f2fb29c03117391ff88 *${NGINX_VERSION}-${PKG_RELEASE}.tar.gz\"                 && if [ \"\$(openssl sha512 -r ${NGINX_VERSION}-${PKG_RELEASE}.tar.gz)\" = \"\$PKGOSSCHECKSUM\" ]; then                     echo \"pkg-oss tarball checksum verification succeeded!\";                 else                     echo \"pkg-oss tarball checksum verification failed!\";                     exit 1;                 fi                 && tar xzvf ${NGINX_VERSION}-${PKG_RELEASE}.tar.gz                 && cd pkg-oss-${NGINX_VERSION}-${PKG_RELEASE}                 && cd alpine                 && make base                 && apk index -o ${tempDir}/packages/alpine/${apkArch}/APKINDEX.tar.gz ${tempDir}/packages/alpine/${apkArch}/*.apk                 && abuild-sign -k ${tempDir}/.abuild/abuild-key.rsa ${tempDir}/packages/alpine/${apkArch}/APKINDEX.tar.gz                 \"             && cp ${tempDir}/.abuild/abuild-key.rsa.pub /etc/apk/keys/             && apk del --no-network .build-deps             && apk add -X ${tempDir}/packages/alpine/ --no-cache $nginxPackages             ;;     esac     && apk del --no-network .checksum-deps     && if [ -n \"$tempDir\" ]; then rm -rf \"$tempDir\"; fi     && if [ -f \"/etc/apk/keys/abuild-key.rsa.pub\" ]; then rm -f /etc/apk/keys/abuild-key.rsa.pub; fi     && if [ -f \"/etc/apk/keys/nginx_signing.rsa.pub\" ]; then rm -f /etc/apk/keys/nginx_signing.rsa.pub; fi     && apk add --no-cache --virtual .gettext gettext     && mv /usr/bin/envsubst /tmp/         && runDeps=\"$(         scanelf --needed --nobanner /tmp/envsubst             | awk '{ gsub(/,/, \"\nso:\", $2); print \"so:\" $2 }'             | sort -u             | xargs -r apk info --installed             | sort -u     )\"     && apk add --no-cache $runDeps     && apk del --no-network .gettext     && mv /tmp/envsubst /usr/local/bin/     && apk add --no-cache tzdata     && ln -sf /dev/stdout /var/log/nginx/access.log     && ln -sf /dev/stderr /var/log/nginx/error.log     && mkdir /docker-entrypoint.d # buildkit"]
+	"cust-8e42ae896d6c5a1af27240d11be99de0" [label="subtotal ratio: 3.803769361685002e-05
+layer size: 1.58kb
+subtotal size: 40.62mb
+running total: 11.35mb
+COPY docker-entrypoint.sh / # buildkit" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="COPY docker-entrypoint.sh / # buildkit"]
+	"cust-311378a4cef2cf8859db5697f12c28ef" [label="subtotal ratio: 4.989512279988043e-05
+layer size: 2.08kb
+subtotal size: 40.62mb
+running total: 11.35mb
+COPY 10-listen-on-ipv6-by-default.sh /do" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="COPY 10-listen-on-ipv6-by-default.sh /docker-entrypoint.d # buildkit"]
+	"cust-802a1ec1f36058af033ed2c345475855" [label="subtotal ratio: 6.99705722087735e-06
+layer size: 0.29kb
+subtotal size: 40.62mb
+running total: 11.35mb
+COPY 15-local-resolvers.envsh /docker-en" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="COPY 15-local-resolvers.envsh /docker-entrypoint.d # buildkit"]
+	"cust-3dc34fab449b8edecc9a02f85ee29829" [label="subtotal ratio: 7.08628144047243e-05
+layer size: 2.95kb
+subtotal size: 40.62mb
+running total: 11.35mb
+COPY 20-envsubst-on-templates.sh /docker" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="COPY 20-envsubst-on-templates.sh /docker-entrypoint.d # buildkit"]
+	"cust-81a64c5302d3c8a0e7258bff23e4a28c" [label="subtotal ratio: 0.00010845438692359892
+layer size: 4.51kb
+subtotal size: 40.62mb
+running total: 11.36mb
+COPY 30-tune-worker-processes.sh /docker" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="COPY 30-tune-worker-processes.sh /docker-entrypoint.d # buildkit"]
+	"cust-72b4576b05759a50b1f31c627998345d" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 40.62mb
+running total: 11.36mb
+ENTRYPOINT [\"/docker-entrypoint.sh\"]" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="ENTRYPOINT [\"/docker-entrypoint.sh\"]"]
+	"cust-8b654b77135962a4c88687769dac2519" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 40.62mb
+running total: 11.36mb
+EXPOSE map[80/tcp:{}]" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="EXPOSE map[80/tcp:{}]"]
+	"cust-e4b0dbf5849d76ca07477b20bf80ebe5" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 40.62mb
+running total: 11.36mb
+STOPSIGNAL SIGQUIT" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="STOPSIGNAL SIGQUIT"]
+	"cust-0b7bed57c7e0da5bf189d336181f0959" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 40.62mb
+running total: 11.36mb
+CMD [\"nginx\" \"-g\" \"daemon off;\"]" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="CMD [\"nginx\" \"-g\" \"daemon off;\"]"]
+	"cust-b11f87b4fd5c464116dd15720f8b2464" [label="subtotal ratio: 0.0
+layer size: 0b
+subtotal size: 40.62mb
+running total: 11.36mb
+ENV NJS_VERSION=0.8.2" fillcolor="yellow;0.0001:transparent" shape=box style=filled tooltip="ENV NJS_VERSION=0.8.2"]
+	"cust-6d6c74a16d9a97794b222633dee24540" [label="subtotal ratio: 0.7203315440511829
+layer size: 29.26mb
+subtotal size: 40.62mb
+running total: 40.62mb
+tags: 1.25.3-alpine
+RUN /bin/sh -c set -x     && apkArch=\"$(" fillcolor="yellow;0.7203:transparent" shape=pentagon style=filled tooltip="RUN /bin/sh -c set -x     && apkArch=\"$(cat /etc/apk/arch)\"     && nginxPackages=\"         nginx=${NGINX_VERSION}-r${PKG_RELEASE}         nginx-module-xslt=${NGINX_VERSION}-r${PKG_RELEASE}         nginx-module-geoip=${NGINX_VERSION}-r${PKG_RELEASE}         nginx-module-image-filter=${NGINX_VERSION}-r${PKG_RELEASE}         nginx-module-njs=${NGINX_VERSION}.${NJS_VERSION}-r${PKG_RELEASE}     \"     && apk add --no-cache --virtual .checksum-deps         openssl     && case \"$apkArch\" in         x86_64|aarch64)             set -x             && KEY_SHA512=\"e09fa32f0a0eab2b879ccbbc4d0e4fb9751486eedda75e35fac65802cc9faa266425edf83e261137a2f4d16281ce2c1a5f4502930fe75154723da014214f0655\"             && wget -O /tmp/nginx_signing.rsa.pub https://nginx.org/keys/nginx_signing.rsa.pub             && if echo \"$KEY_SHA512 */tmp/nginx_signing.rsa.pub\" | sha512sum -c -; then                 echo \"key verification succeeded!\";                 mv /tmp/nginx_signing.rsa.pub /etc/apk/keys/;             else                 echo \"key verification failed!\";                 exit 1;             fi             && apk add -X \"https://nginx.org/packages/mainline/alpine/v$(egrep -o '^[0-9]+\.[0-9]+' /etc/alpine-release)/main\" --no-cache $nginxPackages             ;;         *)             set -x             && tempDir=\"$(mktemp -d)\"             && chown nobody:nobody $tempDir             && apk add --no-cache --virtual .build-deps                 gcc                 libc-dev                 make                 openssl-dev                 pcre2-dev                 zlib-dev                 linux-headers                 libxslt-dev                 gd-dev                 geoip-dev                 libedit-dev                 bash                 alpine-sdk                 findutils             && su nobody -s /bin/sh -c \"                 export HOME=${tempDir}                 && cd ${tempDir}                 && curl -f -O https://hg.nginx.org/pkg-oss/archive/${NGINX_VERSION}-${PKG_RELEASE}.tar.gz                 && PKGOSSCHECKSUM=\"00b217979265cc9d66c991c9c89427558936dbaa568d175ca45780589171d94f1866217be09a83438d95494cf38baaa6788320f6d8d23f2fb29c03117391ff88 *${NGINX_VERSION}-${PKG_RELEASE}.tar.gz\"                 && if [ \"\$(openssl sha512 -r ${NGINX_VERSION}-${PKG_RELEASE}.tar.gz)\" = \"\$PKGOSSCHECKSUM\" ]; then                     echo \"pkg-oss tarball checksum verification succeeded!\";                 else                     echo \"pkg-oss tarball checksum verification failed!\";                     exit 1;                 fi                 && tar xzvf ${NGINX_VERSION}-${PKG_RELEASE}.tar.gz                 && cd pkg-oss-${NGINX_VERSION}-${PKG_RELEASE}                 && cd alpine                 && make module-geoip module-image-filter module-njs module-xslt                 && apk index -o ${tempDir}/packages/alpine/${apkArch}/APKINDEX.tar.gz ${tempDir}/packages/alpine/${apkArch}/*.apk                 && abuild-sign -k ${tempDir}/.abuild/abuild-key.rsa ${tempDir}/packages/alpine/${apkArch}/APKINDEX.tar.gz                 \"             && cp ${tempDir}/.abuild/abuild-key.rsa.pub /etc/apk/keys/             && apk del --no-network .build-deps             && apk add -X ${tempDir}/packages/alpine/ --no-cache $nginxPackages             ;;     esac     && apk del --no-network .checksum-deps     && if [ -n \"$tempDir\" ]; then rm -rf \"$tempDir\"; fi     && if [ -f \"/etc/apk/keys/abuild-key.rsa.pub\" ]; then rm -f /etc/apk/keys/abuild-key.rsa.pub; fi     && if [ -f \"/etc/apk/keys/nginx_signing.rsa.pub\" ]; then rm -f /etc/apk/keys/nginx_signing.rsa.pub; fi     && apk add --no-cache curl ca-certificates # buildkit"]
+	"cust-b11f87b4fd5c464116dd15720f8b2464" -> "cust-6d6c74a16d9a97794b222633dee24540"
+	"cust-0b7bed57c7e0da5bf189d336181f0959" -> "cust-b11f87b4fd5c464116dd15720f8b2464"
+	"cust-e4b0dbf5849d76ca07477b20bf80ebe5" -> "cust-0b7bed57c7e0da5bf189d336181f0959"
+	"cust-8b654b77135962a4c88687769dac2519" -> "cust-e4b0dbf5849d76ca07477b20bf80ebe5"
+	"cust-72b4576b05759a50b1f31c627998345d" -> "cust-8b654b77135962a4c88687769dac2519"
+	"cust-81a64c5302d3c8a0e7258bff23e4a28c" -> "cust-72b4576b05759a50b1f31c627998345d"
+	"cust-3dc34fab449b8edecc9a02f85ee29829" -> "cust-81a64c5302d3c8a0e7258bff23e4a28c"
+	"cust-802a1ec1f36058af033ed2c345475855" -> "cust-3dc34fab449b8edecc9a02f85ee29829"
+	"cust-311378a4cef2cf8859db5697f12c28ef" -> "cust-802a1ec1f36058af033ed2c345475855"
+	"cust-8e42ae896d6c5a1af27240d11be99de0" -> "cust-311378a4cef2cf8859db5697f12c28ef"
+	"cust-efca7a672d04f01a7ba0aac9692f95c3" -> "cust-8e42ae896d6c5a1af27240d11be99de0"
+	"cust-3411dc178aaaf6e9f947d367117b99c0" -> "cust-efca7a672d04f01a7ba0aac9692f95c3"
+	"cust-6bc71f83c83000fd65bf75b1ff5a93e2" -> "cust-3411dc178aaaf6e9f947d367117b99c0"
+	"cust-3d3c1d90e62bab04fc4f8e7cd63009d8" -> "cust-6bc71f83c83000fd65bf75b1ff5a93e2"
+	"cust-8135b839e617c0821dbd21c91d17b830" -> "cust-3d3c1d90e62bab04fc4f8e7cd63009d8"
+	"cust-08ccc6dfb2fc1b3e8df41c861b30b133" -> "cust-8135b839e617c0821dbd21c91d17b830"
+}
