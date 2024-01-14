@@ -33,21 +33,15 @@ Instead, I want to look at a collection of tags for example my `test` image and 
 # Assumptions
 
 * How the 'equivalent' image layers are matched between tags (a bit of guesswork)
-* Assumes only the addition of data (data removal is weird, see below for comments)
-* `docker history` returns the layers in order (I couldn't find documentation on this)
+  * This assumes the `docker history` api returns the layers in order
+  * This assumes that each layer has only one parent
+  * This assumption breaks when you use the [https://docs.docker.com/engine/reference/builder/#benefits-of-using---link](`COPY --link`) option (things may incidentally work because of the way graphviz identifies a node)
+* Assumes only the addition of data, note: data doesn't actually get removed in between layers kind of like how git retains all history
 
 # Things this does not do
 
 * `docker pull` image, do that before running the tool
-
-# Why?
-
-Things that are probably affected by image sizes, but need to verify
-* Storage for docker registry
-* Time taken to pull image in production environment when your node already has some layers in it's registry from the older version
-(e.g. going from v1.3 -> v1.4 and already sharing some layers)
-  * Think severless applications
-  * Think k8s and needing the image on the node
+* install [graphviz](https://graphviz.org/download/)
 
 # More questions to answer
 
@@ -79,8 +73,8 @@ python docker-size-visualization.py -rn test -v 0.1 -v 0.2 -v 0.3 -v 0.4 -v 0.5 
 ## Example
 
 ```shell
-head -c 10000000 /dev/urandom > 10.txt
-head -c 100000000 /dev/urandom > 100.txt
+head -c 10485760 /dev/urandom > 10.txt
+head -c 104857600 /dev/urandom > 100.txt
 ```
 
 ```Dockerfile
@@ -96,7 +90,7 @@ RUN rm 10.txt
 RUN rm 100.txt
 ```
 
-Note that the rm command size is 0 sized (expecting negative)
+Note that the rm command size is 0 sized
 ```shell
 ζ docker build --no-cache -t test:0.4 .
 ζ docker history test:0.4
@@ -153,10 +147,16 @@ Each node in the graph is a docker layer, the text
 
 ---
 
-Testing scripts
+# Registry size checking
+
+If you need additional assurances about layer sizes, then my recommendation is to 
+* host your own registry e.g. https://distribution.github.io/distribution/
+* Push your images incrementally to the registry
+* Run the disk usage command where the layers are being stored
+* See if that corroborates your understanding
 
 ```shell
-ζ docker run -p  5000:5000 -v $(pwd):/var/lib/registry registry:2.8.3
+docker run -p 5000:5000 -v $(pwd):/var/lib/registry registry:2.8.3
 ```
 ---
 https://code.visualstudio.com/docs/python/python-tutorial
