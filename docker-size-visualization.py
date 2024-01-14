@@ -109,6 +109,7 @@ class LayerImage:
 def format_number(size: int) -> str: 
     kbNum = size / 1024
     mbNum = kbNum / 1024
+    gbNum = mbNum / 1024
 
     res = 0
     suffix = "zzz"
@@ -118,9 +119,12 @@ def format_number(size: int) -> str:
     elif kbNum < 10:
        res = kbNum
        suffix = "kb"
-    else:
+    elif gbNum < 10:
         res = mbNum
         suffix = "mb"
+    else: # If you need more than this, then you have more problems than a pretty print of the size
+        res = gbNum
+        suffix = "gb"
 
     formatNum = round(res, 2)
     return f"{formatNum}{suffix}"
