@@ -1,6 +1,27 @@
 # Preamble
 
 I have been looking for a way to objectively verify some of the best practices listed by docker (https://docs.docker.com/develop/develop-images/instructions/), in particular managing docker layers and hitting the 'cache' retrospectively, not while it is being built and seeing the 'CACHED' word.
+```shell
+[+] Building 0.9s (12/12) FINISHED
+=> [internal] load .
+=> => transferring context: 
+=> [internal] load build definition from 
+=> => transferring dockerfile:
+=> [internal] load metadata for docker.io/library/alpine:3.19.
+=> [internal] load build 
+=> => transferring context: 
+=> [stage-1 1/4] FROM docker.io/library/alpine:3.19.
+=> CACHED [start 1/3] COPY 10.txt /output
+=> CACHED [start 2/3] COPY 100.txt /output
+=> [start 3/3] COPY file2.txt /output
+=> CACHED [stage-1 2/4] WORKDIR /
+=> [stage-1 3/4] COPY --from=start /output/ 
+=> [stage-1 4/4] COPY file.txt 
+=> exporting to 
+=> => exporting 
+=> => writing image sha256:
+=> => naming to docker.io/library/test:v3
+```
 
 The nearest tool I could find is [dive](https://github.com/wagoodman/dive) but that looks at a single image level and optimising at a (possibly) file by file (or directory) level.
 
@@ -23,18 +44,20 @@ Instead, I want to look at a collection of tags for example my `test` image and 
 
 Things that are probably affected by image sizes, but need to verify
 * Storage for docker registry
-* Time taken to pull image (less relevant here, give here we are looking at a collection of images instead of a single image)
+* Time taken to pull image in production environment when your node already has some layers in it's registry from the older version
+(e.g. going from v1.3 -> v1.4 and already sharing some layers)
   * Think severless applications
   * Think k8s and needing the image on the node
 
-
 # More questions to answer
 
-Does any of this matter? Most people have ci/cd running their docker image build step (Jenkins / github actions etc)
+~~Does any of this matter? Most people have ci/cd running their docker image build step (Jenkins / github actions etc)~~
 
-Given that the job can run on any node, depending on many factors like frequency of build, whether builds workspaces are epheremal / workspace clean up frequency. 
+~~Given that the job can run on any node, depending on many factors like frequency of build, whether builds workspaces are epheremal / workspace clean up frequency. ~~
 
-Does most of this mean that every build effectively runs with `--no-cache` and all of this is a moot exercise?
+~~does most of this mean that every build effectively runs with `--no-cache` and all of this is a moot exercise?~~
+
+This is actually solved already with docker cache backends: https://docs.docker.com/build/cache/ 
 
 # How to run
 Need graphviz to be installed 
@@ -128,6 +151,13 @@ Each node in the graph is a docker layer, the text
 * \<Command that generated the layer>
 
 
+---
+
+Testing scripts
+
+```shell
+ζ docker run -p  5000:5000 -v $(pwd):/var/lib/registry registry:2.8.3
+```
 ---
 https://code.visualstudio.com/docs/python/python-tutorial
 
